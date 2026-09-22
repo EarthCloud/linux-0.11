@@ -1,0 +1,23 @@
+# Linux 0.11 —— clangd 配置（编辑器跳转 / 补全 / 悬浮提示）
+#
+# 编译数据库由 bear 生成：
+#     bear -- ./lab.sh build          # 必须全量构建
+# bear 靠 LD_PRELOAD 拦截 exec()，没真正执行的编译命令不会被记录，所以在已经
+# 编译过的树上直接 `bear -- make` 会得到一个空的 compile_commands.json。
+#
+# 注意：
+#   1. compile_commands.json 里是 /mnt/... 绝对路径，编辑器（VS Code / nvim）
+#      必须跑在 WSL 里；Windows 侧的 clangd 读不懂这些路径。
+#   2. clangd 不需要安装 clang 本体，它自带前端。
+#   3. 头文件不在编译数据库里也没关系：clangd 会找一个包含它的 .c 借用参数
+#      （例如 include/linux/sched.h 会借用 kernel/sched.c 的）。
+#   4. 汇编文件（boot/*.s、kernel/system_call.s、mm/page.s、kb.S）是 GNU as 语法，
+#      clangd 对汇编没有语义分析能力，会报 "Failed to parse command line"；
+#      汇编里的跳转请用 cscope（./lab.sh cscope）或 ctags（./lab.sh tags）。
+
+CompileFlags:
+  # 这套代码靠 Makefile.header 里的 -Wno-* 压掉旧式写法的告警，编译数据库里已经
+  # 带着它们了。若某个文件找不到编译命令（例如新加了文件），可把下面一行
+  # 取消注释当兜底参数：
+  # Add: [-m32, -fcommon, -fgnu89-inline, -Iinclude]
+  CompilationDatabase: .

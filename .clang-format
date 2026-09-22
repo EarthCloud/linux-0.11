@@ -1,0 +1,100 @@
+# Linux 0.11 —— clang-format 配置
+#
+# 风格来源：Linus Torvalds 在 Documentation/process/coding-style.rst 里定下的
+# Linux 内核编码风格；本文件对齐内核源码树自带的 .clang-format。
+#
+# 用法：
+#   clang-format -i <file>              格式化单个文件
+#   git clang-format                    只格式化本次改动的行
+#   clang-format --dry-run -Werror <f>  只检查、不修改
+#
+# 提醒：这是 1991 年的历史代码（含赵炯老师的中文逐行注释），整仓库跑 -i 会产生
+# 大量纯风格改动。先 `git clang-format` 看范围，或只用在自己新写的代码上。
+#
+# 下面这些 Linus 的规矩 clang-format 管不了，只能靠自觉：
+#   * 缩进用 TAB，宽度就是 8（不是 4，更不是空格）
+#   * 单条语句不加花括号；缩进超过 3 层就该重构了
+#   * 函数要短小，只做一件事
+#   * 不要用 typedef 给结构体/指针起别名（_t 是给不透明类型留的）
+#   * 变量名要短：cnt、i、tmp，不用 ThisIsALocalVariable
+#   * 注释写"为什么"，不写"是什么"
+#   * 注释用 C89 的 /* */ ，不用 C99 的 //（本仓库的 // 多为中文补注，属历史遗留）
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignConsecutiveMacros: None
+AlignEscapedNewlines: Left
+AlignOperands: Align
+AlignTrailingComments: true
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+BinPackArguments: false
+BinPackParameters: false
+
+# 花括号：函数/结构体/枚举的 { 另起一行，控制语句的 { 留在本行（K&R）
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: true
+  AfterControlStatement: Never
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: true
+  AfterUnion: false
+  AfterExternBlock: true
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: false
+# 不要拆字符串字面量——源码里有大量 __asm__("...\n\t" "...") 拼接
+BreakStringLiterals: false
+ColumnLimit: 80
+DerivePointerAlignment: false
+IndentCaseLabels: false
+IndentGotoLabels: false
+IndentPPDirectives: None
+IndentWidth: 8
+IndentWrappedFunctionNames: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+
+# 换行代价：尽量把行压满 80 列，别急着折行（内核同款）
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 1
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+
+PointerAlignment: Right
+# 不要重排注释内容：中文注释被重排会很难看
+ReflowComments: false
+# include 次序由作者手工维护，工具不要插手
+SortIncludes: false
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeSquareBrackets: false
+TabWidth: 8
+UseTab: Always
+
+# 注：内核 .clang-format 里还有 ForEachMacros / StatementMacros /
+# WhitespaceSensitiveMacros 三张表，用来保护内核自己的宏。0.11 里没有这类宏，
+# 唯一的候选是 lib/*.c 的 _syscall0~3（会被规范化成 _syscall1(int, close, int, fd)），
+# 实测 WhitespaceSensitiveMacros 对它无效，且改动无害，故不列。

@@ -25,3 +25,7 @@ Thumbs.db
 *.bak
 *.orig
 *~
+
+# ---- clangd / 语言服务 ----
+compile_commands.json
+.cache/
