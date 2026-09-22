@@ -1,0 +1,41 @@
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	AS	= as --32
+	LD	= ld
+	#LDFLAGS = -m elf_i386 -x 
+	LDFLAGS = -m elf_i386
+	CC	= gcc
+	# 说明：这份 1991 年的代码需要在宽松的 C 语义下编译。
+# -std=gnu17 恢复 C23 之前的隐式声明 / 空参数列表语义；
+# -fcommon 兼容老式的暂定定义写法；
+# 其余 -Wno-* 用于屏蔽旧式写法在现代 GCC 下的告警。
+	CFLAGS  = -g -std=gnu17 -fcommon -m32 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce -Wno-implicit-function-declaration -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-builtin-declaration-mismatch -fgnu89-inline #-Wall
+
+	CPP	= cpp -nostdinc
+	AR	= ar
+	STRIP = strip
+	OBJCOPY = objcopy
+	# we should use -fno-stack-protector with gcc 4.3
+	gcc_version=$(shell ls -l `which gcc` | tr '-' '\n' | tail -1)
+endif
+
+
+
+ifeq ($(UNAME), Darwin)
+	AS	= i386-elf-as --32
+	LD	= i386-elf-ld
+	#LDFLAGS = -m elf_i386 -x 
+	LDFLAGS = -m elf_i386
+	#CC	= i386-elf-gcc-4.3.2
+	CC	= i386-elf-gcc
+	CFLAGS  = -gdwarf-2 -g3 -m32 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce #-Wall
+
+	#CPP	= i386-elf-cpp-4.3.2 -nostdinc
+	CPP	= i386-elf-cpp -nostdinc
+	AR	=i386-elf-ar
+	STRIP = i386-elf-strip
+	OBJCOPY = i386-elf-objcopy
+endif
+
+

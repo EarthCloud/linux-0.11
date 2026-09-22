@@ -1,0 +1,28 @@
+# ---- 构建产物 ----
+*.o
+*.a
+Image
+System.map
+tools/system
+tools/kernel
+system.tmp
+tmp_make
+boot/bootsect
+boot/setup
+kernel/chr_drv/keyboard.s
+
+# ---- 运行 / 调试产物 ----
+*.ppm
+boot.log
+logs/
+cscope.out
+cscope.files
+
+# ---- 编辑器 / 系统杂物 ----
+Thumbs.db
+.DS_Store
+*.log
+*.bak
+*.orig
+*~
+boot-screenshot.png
