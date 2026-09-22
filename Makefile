@@ -48,7 +48,7 @@ Image: boot/bootsect boot/setup tools/system
 	@cp -f tools/system system.tmp
 	@$(STRIP) system.tmp
 	@$(OBJCOPY) -O binary -R .note -R .comment system.tmp tools/kernel
-	@tools/build.sh boot/bootsect boot/setup tools/kernel Image $(ROOT_DEV)
+	@sh tools/build.sh boot/bootsect boot/setup tools/kernel Image $(ROOT_DEV)
 	@rm system.tmp
 	@rm -f tools/kernel
 	@sync

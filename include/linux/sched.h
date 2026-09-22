@@ -277,15 +277,15 @@ __asm__ ("cmpl %%ecx,current\n\t" \
 /*
 #define switch_to(n) {\
 struct {long a,b;} __tmp; \
-__asm__( "cmpl %%ecx,_current\n\t" \	
-  "je 1f\n\t" \			
-  "movw %%dx,%1\n\t" \		
+__asm__( "cmpl %%ecx,_current\n\t" \
+  "je 1f\n\t" \
+  "movw %%dx,%1\n\t" \
   "xchgl %%ecx,_current\n\t" \	。
   "ljmp %0\n\t" \		。
 // 在任务切换回来后才会继续执行下面的语句。
-  "cmpl %%ecx,_last_task_used_math\n\t" \	
-  "jne 1f\n\t" \		
-  "clts\n" \			
+  "cmpl %%ecx,_last_task_used_math\n\t" \
+  "jne 1f\n\t" \
+  "clts\n" \
   "1:"::"m" (*&__tmp.a), "m" (*&__tmp.b),
   "d" (_TSS (n)), "c" ((long) task[n]));
 }*/
@@ -307,10 +307,10 @@ static inline void _set_base(unsigned short *addr,unsigned long base)
 		  "d" (base));
 }
 /*
-__asm__( "movw %%dx,%0\n\t" \	
-"rorl $16,%%edx\n\t" \		
-  "movb %%dl,%1\n\t" \		
-  "movb %%dh,%2" \		
+__asm__( "movw %%dx,%0\n\t" \
+"rorl $16,%%edx\n\t" \
+  "movb %%dl,%1\n\t" \
+  "movb %%dh,%2" \
 ::"m" (*((addr) + 2)), "m" (*((addr) + 4)), "m" (*((addr) + 7)), "d" (base):"dx")
 */
 // 设置位于地址addr 处描述符中的段限长字段(段长是limit)。
@@ -329,12 +329,12 @@ static inline void _set_limit(unsigned short *addr,unsigned long limit)
 }
 /*
 #define _set_limit(addr,limit) \
-__asm__( "movw %%dx,%0\n\t" \	
-  "rorl $16,%%edx\n\t" \	
-  "movb %1,%%dh\n\t" \		
-  "andb $0xf0,%%dh\n\t" \	
-  "orb %%dh,%%dl\n\t" \		
-  "movb %%dl,%1" \		
+__asm__( "movw %%dx,%0\n\t" \
+  "rorl $16,%%edx\n\t" \
+  "movb %1,%%dh\n\t" \
+  "andb $0xf0,%%dh\n\t" \
+  "orb %%dh,%%dl\n\t" \
+  "movb %%dl,%1" \
 ::"m" (*(addr)), "m" (*((addr) + 6)), "d" (limit):"dx")
 */
 // 设置局部描述符表中ldt 描述符的基地址字段。
@@ -361,10 +361,10 @@ static inline unsigned long _get_base(void *addr)
 }
 /*
 unsigned long __base; \
-__asm__( "movb %3,%%dh\n\t" \	
-  "movb %2,%%dl\n\t" \		
-  "shll $16,%%edx\n\t" \	
-  "movw %1,%%dx" \		
+__asm__( "movb %3,%%dh\n\t" \
+  "movb %2,%%dl\n\t" \
+  "shll $16,%%edx\n\t" \
+  "movw %1,%%dx" \
 :"=d" (__base)  // 从而edx 中含有32 位的段基地址。
 :"m" (*((addr) + 2)), "m" (*((addr) + 4)), "m" (*((addr) + 7))); \
 __base; \

@@ -69,8 +69,8 @@ __asm__("cld\n" \
 	"jmp 3f\n" \
 	"2:\taddl $32,%%ecx\n\t" \
 	"cmpl $8192,%%ecx\n\t" \
-	"jl 1b\n" \ 
-	"3:" \ 
+	"jl 1b\n" \
+	"3:" \
 	:"=c" (__res):"c" (0),"S" (addr):"ax","dx","memory"); \
 __res;})
 

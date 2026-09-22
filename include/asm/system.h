@@ -15,14 +15,14 @@ __asm__ ("movl %%esp,%%eax\n\t" \
         "movw %%ax,%%gs" \
         :::"ax")
 /*
-__asm__ ( "movl %%esp,%%eax\n\t" \	
-"pushl $0x17\n\t" \		
-  "pushl %%eax\n\t" \		
-  "pushfl\n\t" \		
-  "pushl $0x0f\n\t" \		
-  "pushl $1f\n\t" \		
-  "iret\n" \			
-  "1:\tmovl $0x17,%%eax\n\t" \	
+__asm__ ( "movl %%esp,%%eax\n\t" \
+"pushl $0x17\n\t" \
+  "pushl %%eax\n\t" \
+  "pushfl\n\t" \
+  "pushl $0x0f\n\t" \
+  "pushl $1f\n\t" \
+  "iret\n" \
+  "1:\tmovl $0x17,%%eax\n\t" \
   "movw %%ax,%%ds\n\t"  // 初始化段寄存器指向本局部表的数据段。
 "movw %%ax,%%es\n\t" "movw %%ax,%%fs\n\t" "movw %%ax,%%gs":::"ax")
 */
@@ -52,9 +52,9 @@ static inline void _set_gate(unsigned long *gate_addr, \
 	_asm mov [ebx+4],edx ;*/
 }
 /*
-__asm__ ( "movw %%dx,%%ax\n\t" \	
-  "movw %0,%%dx\n\t" \		
-  "movl %%eax,%1\n\t" \		
+__asm__ ( "movw %%dx,%%ax\n\t" \
+  "movw %0,%%dx\n\t" \
+  "movl %%eax,%1\n\t" \
 "movl %%edx,%2":
 :"i" ((short) (0x8000 + (dpl << 13) + (type << 8))),
   "o" (*((char *) (gate_addr))),
@@ -105,14 +105,14 @@ static inline void _set_tssldt_desc(unsigned short *n,unsigned long addr,char tp
     ((char *)n)[5] = tp;                    /* 将标志类型字节移入描述符的第5 字节。*/
     ((char *)n)[6] = 0;                     /* 描述符的第6 字节置0。*/
 }/*
-__asm__ ( "movw $104,%1\n\t" \	
-"movw %%ax,%2\n\t" \		
-  "rorl $16,%%eax\n\t" \	
-  "movb %%al,%3\n\t" \		
-  "movb $" type ",%4\n\t" \	
-  "movb $0x00,%5\n\t" \		
-  "movb %%ah,%6\n\t" \		
-  "rorl $16,%%eax" \		
+__asm__ ( "movw $104,%1\n\t" \
+"movw %%ax,%2\n\t" \
+  "rorl $16,%%eax\n\t" \
+  "movb %%al,%3\n\t" \
+  "movb $" type ",%4\n\t" \
+  "movb $0x00,%5\n\t" \
+  "movb %%ah,%6\n\t" \
+  "rorl $16,%%eax" \
   ::"a" (addr), "m" (*(n)), "m" (*(n + 2)), "m" (*(n + 4)),
   "m" (*(n + 5)), "m" (*(n + 6)), "m" (*(n + 7)))
 */
