@@ -15,7 +15,7 @@ usage() {
   build   编译内核，产出 Image / tools/system / System.map
   run     在 QEMU 里启动（需要图形界面 / WSLg）
   debug   以 -s -S 启动 QEMU，等 gdb 从本机 1234 端口连接
-  shot    无图形环境下启动 20 秒并截屏到 boot-screenshot.png
+  shot    无图形环境下启动并截屏到 docs/boot.png
   cscope  重新生成 cscope 索引
   clean   清理编译产物
   help    显示本帮助
@@ -49,12 +49,13 @@ case "${1:-help}" in
     ;;
   shot)
     need_image
-    rm -f "$REF/shot.ppm" "$REF/boot-screenshot.png"
-    ( sleep 22; echo "screendump $REF/shot.ppm"; sleep 2; echo "quit" ) | \
+    mkdir -p "$REF/docs"
+    rm -f "$REF/docs/boot.png"
+    # QEMU 10+ 的 screendump 支持 -f png，直接输出 PNG，无需外部转换工具
+    ( sleep 22; echo "screendump $REF/docs/boot.png -f png"; sleep 2; echo "quit" ) | \
       timeout 90 $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" -snapshot \
-        -vga std -display none -monitor stdio >"$REF/boot.log" 2>&1
-    python3 "$REF/scripts/ppm2png.py" "$REF/shot.ppm" "$REF/boot-screenshot.png" \
-      && rm -f "$REF/shot.ppm"
+        -vga std -display none -monitor stdio >/dev/null 2>&1
+    ls -l "$REF/docs/boot.png"
     ;;
   cscope)
     cd "$REF" || exit 1
@@ -64,7 +65,7 @@ case "${1:-help}" in
     cscope -b -q -k && echo "cscope 索引已生成（cscope.out）"
     ;;
   clean)
-    cd "$REF" && make clean && rm -f boot.log shot.ppm && echo "已清理"
+    cd "$REF" && make clean && rm -f boot.log && echo "已清理"
     ;;
   help|-h|--help)
     usage

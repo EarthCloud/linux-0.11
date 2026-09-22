@@ -84,7 +84,6 @@ fs/        文件系统：缓冲区、inode、路径解析、执行程序
 include/   头文件
 lib/       内核库函数
 tools/     构建工具与 bochs 配置
-scripts/   辅助脚本（ppm2png.py：QEMU 截图转 PNG）
 docs/      验证截图
 hdc-0.11.img   62MB 根文件系统镜像（MINIX 文件系统），启动必需
 ```
