@@ -10,7 +10,7 @@
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。
 
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
-	  // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
+// 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
 
 // 终端ioctl(chr_drv/tty_ioctl.c, 115)。
 extern int tty_ioctl(int dev, int cmd, int arg);

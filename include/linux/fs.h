@@ -100,7 +100,7 @@ struct buffer_head
 	unsigned short b_dev; /* device (0 = free) */ // 数据源的设备号。
 	unsigned char b_uptodate; // 更新标志：表示数据是否已更新。
 	unsigned char b_dirt;
-	    /* 0-clean,1-dirty */ //修改标志:0 未修改,1 已修改.
+	/* 0-clean,1-dirty */ //修改标志:0 未修改,1 已修改.
 	unsigned char b_count; /* users using this block */ // 使用的用户数。
 	unsigned char b_lock; /* 0 - ok, 1 -locked */ // 缓冲区是否被锁定。
 	struct task_struct * b_wait; // 指向等待该缓冲区解锁的任务。
@@ -114,25 +114,25 @@ struct buffer_head
 // 磁盘上的索引节点(i 节点)数据结构。
 struct d_inode
 {
-	unsigned short i_mode; // 文件类型和属性(rwx 位)。
-	unsigned short i_uid;  // 用户id（文件拥有者标识符）。
-	unsigned long i_size;  // 文件大小（字节数）。
-	unsigned long i_time; // 修改时间（自1970.1.1:0 算起，秒）。
-	unsigned char i_gid;  // 组id(文件拥有者所在的组)。
-	unsigned char i_nlinks; // 链接数（多少个文件目录项指向该i 节点）。
+	unsigned short i_mode;	  // 文件类型和属性(rwx 位)。
+	unsigned short i_uid;	  // 用户id（文件拥有者标识符）。
+	unsigned long i_size;	  // 文件大小（字节数）。
+	unsigned long i_time;	  // 修改时间（自1970.1.1:0 算起，秒）。
+	unsigned char i_gid;	  // 组id(文件拥有者所在的组)。
+	unsigned char i_nlinks;	  // 链接数（多少个文件目录项指向该i 节点）。
 	unsigned short i_zone[9]; // 直接(0-6)、间接(7)或双重间接(8)逻辑块号。
-	// zone 是区的意思，可译成区段，或逻辑块。
+				  // zone 是区的意思，可译成区段，或逻辑块。
 };
 
 // 这是在内存中的i 节点结构。前7 项与d_inode 完全一样。
 struct m_inode
 {
-	unsigned short i_mode; // 文件类型和属性(rwx 位)。
-	unsigned short i_uid;  // 用户id（文件拥有者标识符）。
-	unsigned long i_size;  // 文件大小（字节数）。
-	unsigned long i_mtime; // 修改时间（自1970.1.1:0 算起，秒）。
-	unsigned char i_gid;   // 组id(文件拥有者所在的组)。
-	unsigned char i_nlinks; // 文件目录项链接数。
+	unsigned short i_mode;	  // 文件类型和属性(rwx 位)。
+	unsigned short i_uid;	  // 用户id（文件拥有者标识符）。
+	unsigned long i_size;	  // 文件大小（字节数）。
+	unsigned long i_mtime;	  // 修改时间（自1970.1.1:0 算起，秒）。
+	unsigned char i_gid;	  // 组id(文件拥有者所在的组)。
+	unsigned char i_nlinks;	  // 文件目录项链接数。
 	unsigned short i_zone[9]; // 直接(0-6)、间接(7)或双重间接(8)逻辑块号。
 				  /* these are in memory also */
 	struct task_struct * i_wait; // 等待该i 节点的进程。
@@ -140,21 +140,21 @@ struct m_inode
 	unsigned long i_ctime;	     // i 节点自身修改时间。
 	unsigned short i_dev;	     // i 节点所在的设备号。
 	unsigned short i_num;	     // i 节点号。
-	unsigned short i_count; // i 节点被使用的次数，0 表示该i 节点空闲。
-	unsigned char i_lock;	// 锁定标志。
-	unsigned char i_dirt;	// 已修改(脏)标志。
-	unsigned char i_pipe;	// 管道标志。
-	unsigned char i_mount;	// 安装标志。
-	unsigned char i_seek;	// 搜寻标志(lseek 时)。
-	unsigned char i_update; // 更新标志。
+	unsigned short i_count;	     // i 节点被使用的次数，0 表示该i 节点空闲。
+	unsigned char i_lock;	     // 锁定标志。
+	unsigned char i_dirt;	     // 已修改(脏)标志。
+	unsigned char i_pipe;	     // 管道标志。
+	unsigned char i_mount;	     // 安装标志。
+	unsigned char i_seek;	     // 搜寻标志(lseek 时)。
+	unsigned char i_update;	     // 更新标志。
 };
 
 // 文件结构（用于在文件句柄与i 节点之间建立关系）
 struct file
 {
-	unsigned short f_mode;	// 文件操作模式（RW 位）
-	unsigned short f_flags; // 文件打开和控制的标志。
-	unsigned short f_count; // 对应文件句柄（文件描述符）数。
+	unsigned short f_mode;	  // 文件操作模式（RW 位）
+	unsigned short f_flags;	  // 文件打开和控制的标志。
+	unsigned short f_count;	  // 对应文件句柄（文件描述符）数。
 	struct m_inode * f_inode; // 指向对应i 节点。
 	off_t f_pos;		  // 文件位置（读写偏移值）。
 };
@@ -162,19 +162,19 @@ struct file
 // 内存中磁盘超级块结构。
 struct super_block
 {
-	unsigned short s_ninodes;     // 节点数。
-	unsigned short s_nzones;      // 逻辑块数。
-	unsigned short s_imap_blocks; // i 节点位图所占用的数据块数。
-	unsigned short s_zmap_blocks; // 逻辑块位图所占用的数据块数。
+	unsigned short s_ninodes;	// 节点数。
+	unsigned short s_nzones;	// 逻辑块数。
+	unsigned short s_imap_blocks;	// i 节点位图所占用的数据块数。
+	unsigned short s_zmap_blocks;	// 逻辑块位图所占用的数据块数。
 	unsigned short s_firstdatazone; // 第一个数据逻辑块号。
 	unsigned short s_log_zone_size; // log(数据块数/逻辑块)。（以2 为底）。
-	unsigned long s_max_size; // 文件最大长度。
-	unsigned short s_magic;	  // 文件系统魔数。
-				  /* These are only in memory */
+	unsigned long s_max_size;	// 文件最大长度。
+	unsigned short s_magic;		// 文件系统魔数。
+					/* These are only in memory */
 	struct buffer_head *
 	    s_imap[8]; // i 节点位图缓冲块指针数组(占用8 块，可表示64M)。
 	struct buffer_head *
-	    s_zmap[8]; // 逻辑块位图缓冲块指针数组（占用8 块）。
+	    s_zmap[8];	      // 逻辑块位图缓冲块指针数组（占用8 块）。
 	unsigned short s_dev; // 超级块所在的设备号。
 	struct m_inode *
 	    s_isup; // 被安装的文件系统根目录的i 节点。(isup-super i)
@@ -189,14 +189,14 @@ struct super_block
 // 磁盘上超级块结构。上面125-132 行完全一样。
 struct d_super_block
 {
-	unsigned short s_ninodes;     // 节点数。
-	unsigned short s_nzones;      // 逻辑块数。
-	unsigned short s_imap_blocks; // i 节点位图所占用的数据块数。
-	unsigned short s_zmap_blocks; // 逻辑块位图所占用的数据块数。
+	unsigned short s_ninodes;	// 节点数。
+	unsigned short s_nzones;	// 逻辑块数。
+	unsigned short s_imap_blocks;	// i 节点位图所占用的数据块数。
+	unsigned short s_zmap_blocks;	// 逻辑块位图所占用的数据块数。
 	unsigned short s_firstdatazone; // 第一个数据逻辑块。
 	unsigned short s_log_zone_size; // log(数据块数/逻辑块)。（以2 为底）。
-	unsigned long s_max_size; // 文件最大长度。
-	unsigned short s_magic;	  // 文件系统魔数。
+	unsigned long s_max_size;	// 文件最大长度。
+	unsigned short s_magic;		// 文件系统魔数。
 };
 
 // 文件目录项结构。
@@ -206,11 +206,11 @@ struct dir_entry
 	char name[NAME_LEN];  // 文件名。
 };
 
-extern struct m_inode inode_table[NR_INODE]; // 定义i 节点表数组（32 项）。
-extern struct file file_table[NR_FILE]; // 文件表数组（64 项）。
+extern struct m_inode inode_table[NR_INODE];	 // 定义i 节点表数组（32 项）。
+extern struct file file_table[NR_FILE];		 // 文件表数组（64 项）。
 extern struct super_block super_block[NR_SUPER]; // 超级块数组（8 项）。
-extern struct buffer_head * start_buffer; // 缓冲区起始内存位置。
-extern int nr_buffers;			  // 缓冲块数。
+extern struct buffer_head * start_buffer;	 // 缓冲区起始内存位置。
+extern int nr_buffers;				 // 缓冲块数。
 
 //// 磁盘操作函数原型。
 // 检测驱动器中软盘是否改变。

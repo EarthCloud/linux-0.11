@@ -12,7 +12,7 @@
 #include <linux/tty.h> // tty 头文件，定义了有关tty_io，串行通信方面的参数、常数。
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。
-#include <sys/times.h> // 定义了进程中运行时间的结构tms 以及times()函数原型。
+#include <sys/times.h>	 // 定义了进程中运行时间的结构tms 以及times()函数原型。
 #include <sys/utsname.h> // 系统名称结构头文件。
 
 // 返回日期和时间。
@@ -201,7 +201,7 @@ int sys_brk(unsigned long end_data_seg)
 	if (end_data_seg >= current->end_code && // 如果参数>代码结尾，并且
 	    end_data_seg < current->start_stack - 16384) // 小于堆栈-16KB，
 		current->brk = end_data_seg; // 则设置新数据段结尾值。
-	return current->brk; // 返回进程当前的数据段结尾值。
+	return current->brk;		     // 返回进程当前的数据段结尾值。
 }
 
 /*
@@ -224,16 +224,16 @@ int sys_setpgid(int pid, int pgid)
 	if (!pid) // 如果参数pid=0，则使用当前进程号。
 		pid = current->pid;
 	if (!pgid) // 如果pgid 为0，则使用当前进程pid 作为pgid。
-		pgid = current->pid; // [??这里与POSIX 的描述有出入]
+		pgid = current->pid;   // [??这里与POSIX 的描述有出入]
 	for (i = 0; i < NR_TASKS; i++) // 扫描任务数组，查找指定进程号的任务。
 		if (task[i] && task[i]->pid == pid) {
 			if (task[i]
 				->leader) // 如果该任务已经是首领，则出错返回。
 				return -EPERM;
 			if (task[i]->session !=
-			    current->session) // 如果该任务的会话ID
+			    current->session)  // 如果该任务的会话ID
 				return -EPERM; // 与当前进程的不同，则出错返回。
-			task[i]->pgrp = pgid; // 设置该任务的pgrp。
+			task[i]->pgrp = pgid;  // 设置该任务的pgrp。
 			return 0;
 		}
 	return -ESRCH;
@@ -249,7 +249,7 @@ int sys_getpgrp(void)
 int sys_setsid(void)
 {
 	if (current->leader &&
-	    !suser()) // 如果当前进程已是会话首领并且不是超级用户
+	    !suser())	       // 如果当前进程已是会话首领并且不是超级用户
 		return -EPERM; // 则出错返回。
 	current->leader = 1;   // 设置当前进程为新会话首领。
 	current->session = current->pgrp =

@@ -67,10 +67,10 @@ int sys_signal(int signum, long handler, long restorer)
 	struct sigaction tmp;
 
 	if (signum < 1 || signum > 32 ||
-	    signum == SIGKILL) // 信号值要在（1-32）范围内，
-		return -1;     // 并且不得是SIGKILL。
+	    signum == SIGKILL)			 // 信号值要在（1-32）范围内，
+		return -1;			 // 并且不得是SIGKILL。
 	tmp.sa_handler = (void (*)(int))handler; // 指定的信号处理句柄。
-	tmp.sa_mask = 0; // 执行时的信号屏蔽码。
+	tmp.sa_mask = 0;			 // 执行时的信号屏蔽码。
 	tmp.sa_flags =
 	    SA_ONESHOT | SA_NOMASK; // 该句柄只使用1 次后就恢复到默认值，
 	// 并允许信号在自己的处理句柄中收到。

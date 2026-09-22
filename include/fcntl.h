@@ -14,10 +14,10 @@
 #define O_CREAT 00100 /* not fcntl */  // 如果文件不存在就创建。
 #define O_EXCL 00200 /* not fcntl */   // 独占使用文件标志。
 #define O_NOCTTY 00400 /* not fcntl */ // 不分配控制终端。
-#define O_TRUNC 01000 /* not fcntl */ // 若文件已存在且是写操作，则长度截为0。
-#define O_APPEND 02000 // 以添加方式打开，文件指针置为文件尾。
+#define O_TRUNC 01000 /* not fcntl */  // 若文件已存在且是写操作，则长度截为0。
+#define O_APPEND 02000		       // 以添加方式打开，文件指针置为文件尾。
 #define O_NONBLOCK 04000 /* not fcntl */ // 非阻塞方式打开和操作文件。
-#define O_NDELAY O_NONBLOCK // 非阻塞方式打开和操作文件。
+#define O_NDELAY O_NONBLOCK		 // 非阻塞方式打开和操作文件。
 
 /* Defines for fcntl-commands. Note that currently
 * locking isn't supported, and other things aren't really
@@ -27,11 +27,11 @@
 * 命令实际上还没有测试过。
 */
 // 文件句柄(描述符)操作函数fcntl()的命令。
-#define F_DUPFD 0 /* dup */ // 拷贝文件句柄为最小数值的句柄。
+#define F_DUPFD 0 /* dup */		     // 拷贝文件句柄为最小数值的句柄。
 #define F_GETFD 1 /* get f_flags */	     // 取文件句柄标志。
 #define F_SETFD 2 /* set f_flags */	     // 设置文件句柄标志。
 #define F_GETFL 3 /* more flags (cloexec) */ // 取文件状态标志和访问模式。
-#define F_SETFL 4 // 设置文件状态标志和访问模式。
+#define F_SETFL 4			     // 设置文件状态标志和访问模式。
 // 下面是文件锁定命令。fcntl()的第三个参数lock 是指向flock 结构的指针。
 #define F_GETLK 5 /* not implemented */ // 返回阻止锁定的flock 结构。
 #define F_SETLK 6  // 设置(F_RDLCK 或F_WRLCK)或清除(F_UNLCK)锁定。
@@ -60,9 +60,9 @@ struct flock
 {
 	short l_type;	// 锁定类型（F_RDLCK，F_WRLCK，F_UNLCK）。
 	short l_whence; // 开始偏移(SEEK_SET，SEEK_CUR 或SEEK_END)。
-	off_t l_start; // 阻塞锁定的开始处。相对偏移（字节数）。
-	off_t l_len; // 阻塞锁定的大小；如果是0 则为到文件末尾。
-	pid_t l_pid; // 加锁的进程id。
+	off_t l_start;	// 阻塞锁定的开始处。相对偏移（字节数）。
+	off_t l_len;	// 阻塞锁定的大小；如果是0 则为到文件末尾。
+	pid_t l_pid;	// 加锁的进程id。
 };
 
 // 以下是使用上述标志或命令的函数原型。

@@ -99,7 +99,7 @@ void rd_load(void)
 		return;
 	printk("Ram disk: %d bytes, starting at 0x%x\n",
 	       rd_length,
-	       (int)rd_start); // 显示ramdisk 的大小以及内存起始位置。
+	       (int)rd_start);	  // 显示ramdisk 的大小以及内存起始位置。
 	if (MAJOR(ROOT_DEV) != 2) // 如果此时根文件设备不是软盘，则退出。
 		return;
 	// 读软盘块256+1,256,256+2。breada()用于读取指定的数据块，并标出还需要读的块，然后返回
@@ -145,7 +145,7 @@ void rd_load(void)
 			     BLOCK_SIZE); // 将缓冲区中的数据复制到cp 处。
 		brelse(bh);		  // 释放缓冲区。
 		printk("\010\010\010\010\010%4dk", i); // 打印加载块计数值。
-		cp += BLOCK_SIZE; // 虚拟盘指针前移。
+		cp += BLOCK_SIZE;		       // 虚拟盘指针前移。
 		block++;
 		nblocks--;
 		i++;

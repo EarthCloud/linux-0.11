@@ -88,11 +88,11 @@ struct winsize
 #define NCC 8 // termio 结构中控制字符数组的长度。
 struct termio
 {
-	unsigned short c_iflag; /* input mode flags */	// 输入模式标志。
-	unsigned short c_oflag; /* output mode flags */ // 输出模式标志。
-	unsigned short c_cflag; /* control mode flags */ // 控制模式标志。
-	unsigned short c_lflag; /* local mode flags */ // 本地模式标志。
-	unsigned char c_line; /* line discipline */ // 线路规程（速率）。
+	unsigned short c_iflag; /* input mode flags */	  // 输入模式标志。
+	unsigned short c_oflag; /* output mode flags */	  // 输出模式标志。
+	unsigned short c_cflag; /* control mode flags */  // 控制模式标志。
+	unsigned short c_lflag; /* local mode flags */	  // 本地模式标志。
+	unsigned char c_line; /* line discipline */	  // 线路规程（速率）。
 	unsigned char c_cc[NCC]; /* control characters */ // 控制字符数组。
 };
 
@@ -100,22 +100,22 @@ struct termio
 #define NCCS 17 // termios 结构中控制字符数组的长度。
 struct termios
 {
-	unsigned long c_iflag; /* input mode flags */	// 输入模式标志。
-	unsigned long c_oflag; /* output mode flags */	// 输出模式标志。
-	unsigned long c_cflag; /* control mode flags */ // 控制模式标志。
-	unsigned long c_lflag; /* local mode flags */	// 本地模式标志。
-	unsigned char c_line; /* line discipline */ // 线路规程（速率）。
+	unsigned long c_iflag; /* input mode flags */	   // 输入模式标志。
+	unsigned long c_oflag; /* output mode flags */	   // 输出模式标志。
+	unsigned long c_cflag; /* control mode flags */	   // 控制模式标志。
+	unsigned long c_lflag; /* local mode flags */	   // 本地模式标志。
+	unsigned char c_line; /* line discipline */	   // 线路规程（速率）。
 	unsigned char c_cc[NCCS]; /* control characters */ // 控制字符数组。
 };
 
 /* c_cc characters */ /* c_cc 数组中的字符 */
 // 以下是c_cc 数组对应字符的索引值。
-#define VINTR 0	 // c_cc[VINTR] = INTR (^C)，\003，中断字符。
-#define VQUIT 1	 // c_cc[VQUIT] = QUIT (^\)，\034，退出字符。
-#define VERASE 2 // c_cc[VERASE] = ERASE (^H)，\177，擦出字符。
-#define VKILL 3	 // c_cc[VKILL] = KILL (^U)，\025，终止字符。
-#define VEOF 4	 // c_cc[VEOF] = EOF (^D)，\004，文件结束字符。
-#define VTIME 5 // c_cc[VTIME] = TIME (\0)，\0， 定时器值(参见后面说明)。
+#define VINTR 0	    // c_cc[VINTR] = INTR (^C)，\003，中断字符。
+#define VQUIT 1	    // c_cc[VQUIT] = QUIT (^\)，\034，退出字符。
+#define VERASE 2    // c_cc[VERASE] = ERASE (^H)，\177，擦出字符。
+#define VKILL 3	    // c_cc[VKILL] = KILL (^U)，\025，终止字符。
+#define VEOF 4	    // c_cc[VEOF] = EOF (^D)，\004，文件结束字符。
+#define VTIME 5	    // c_cc[VTIME] = TIME (\0)，\0， 定时器值(参见后面说明)。
 #define VMIN 6	    // c_cc[VMIN] = MIN (\1)，\1， 定时器值。
 #define VSWTC 7	    // c_cc[VSWTC] = SWTC (\0)，\0， 交换字符。
 #define VSTART 8    // c_cc[VSTART] = START (^Q)，\021，开始字符。
@@ -124,9 +124,9 @@ struct termios
 #define VEOL 11	    // c_cc[VEOL] = EOL (\0)，\0， 行结束字符。
 #define VREPRINT 12 // c_cc[VREPRINT] = REPRINT (^R)，\022，重显示字符。
 #define VDISCARD 13 // c_cc[VDISCARD] = DISCARD (^O)，\017，丢弃字符。
-#define VWERASE 14 // c_cc[VWERASE] = WERASE (^W)，\027，单词擦除字符。
-#define VLNEXT 15  // c_cc[VLNEXT] = LNEXT (^V)，\026，下一行字符。
-#define VEOL2 16   // c_cc[VEOL2] = EOL2 (\0)，\0， 行结束2。
+#define VWERASE 14  // c_cc[VWERASE] = WERASE (^W)，\027，单词擦除字符。
+#define VLNEXT 15   // c_cc[VLNEXT] = LNEXT (^V)，\026，下一行字符。
+#define VEOL2 16    // c_cc[VEOL2] = EOL2 (\0)，\0， 行结束2。
 
 /* c_iflag bits */ /* c_iflag 比特位 */
 // termios 结构输入模式字段c_iflag 各种标志的符号常数。
@@ -147,14 +147,14 @@ struct termios
 
 /* c_oflag bits */ /* c_oflag 比特位 */
 // termios 结构中输出模式字段c_oflag 各种标志的符号常数。
-#define OPOST 0000001 // 执行输出处理。
-#define OLCUC 0000002 // 在输出时将小写字符转换成大写字符。
-#define ONLCR 0000004 // 在输出时将换行符NL 映射成回车-换行符CR-NL。
+#define OPOST 0000001  // 执行输出处理。
+#define OLCUC 0000002  // 在输出时将小写字符转换成大写字符。
+#define ONLCR 0000004  // 在输出时将换行符NL 映射成回车-换行符CR-NL。
 #define OCRNL 0000010  // 在输出时将回车符CR 映射成换行符NL。
 #define ONOCR 0000020  // 在0 列不输出回车符CR。
 #define ONLRET 0000040 // 换行符NL 执行回车符的功能。
 #define OFILL 0000100  // 延迟时使用填充字符而不使用时间延迟。
-#define OFDEL 0000200 // 填充字符是ASCII 码DEL。如果未设置，则使用ASCII NULL。
+#define OFDEL 0000200  // 填充字符是ASCII 码DEL。如果未设置，则使用ASCII NULL。
 #define NLDLY 0000400  // 选择换行延迟。
 #define NL0 0000000    // 换行延迟类型0。
 #define NL1 0000400    // 换行延迟类型1。
@@ -168,16 +168,16 @@ struct termios
 #define TAB1 0004000   // 水平制表延迟类型1。
 #define TAB2 0010000   // 水平制表延迟类型2。
 #define TAB3 0014000   // 水平制表延迟类型3。
-#define XTABS 0014000 // 将制表符TAB 换成空格，该值表示空格数。
-#define BSDLY 0020000 // 选择退格延迟。
-#define BS0 0000000   // 退格延迟类型0。
-#define BS1 0020000   // 退格延迟类型1。
-#define VTDLY 0040000 // 纵向制表延迟。
-#define VT0 0000000   // 纵向制表延迟类型0。
-#define VT1 0040000   // 纵向制表延迟类型1。
-#define FFDLY 0040000 // 选择换页延迟。
-#define FF0 0000000   // 换页延迟类型0。
-#define FF1 0040000   // 换页延迟类型1。
+#define XTABS 0014000  // 将制表符TAB 换成空格，该值表示空格数。
+#define BSDLY 0020000  // 选择退格延迟。
+#define BS0 0000000    // 退格延迟类型0。
+#define BS1 0020000    // 退格延迟类型1。
+#define VTDLY 0040000  // 纵向制表延迟。
+#define VT0 0000000    // 纵向制表延迟类型0。
+#define VT1 0040000    // 纵向制表延迟类型1。
+#define FFDLY 0040000  // 选择换页延迟。
+#define FF0 0000000    // 换页延迟类型0。
+#define FF1 0040000    // 换页延迟类型1。
 
 /* c_cflag bit meaning */ /* c_cflag 比特位的含义 */
 // termios 结构中控制模式标志字段c_cflag 标志的符号常数（8 进制数）。
@@ -207,10 +207,10 @@ struct termios
 #define CS8 0000060		 // 每字符8 比特位。
 #define CSTOPB 0000100		 // 设置两个停止位，而不是1 个。
 #define CREAD 0000200		 // 允许接收。
-#define CPARENB 0000400 // 开启输出时产生奇偶位、输入时进行奇偶校验。
-#define CPARODD 0001000 // 输入/输入校验是奇校验。
-#define HUPCL 0002000	// 最后进程关闭后挂断。
-#define CLOCAL 0004000	// 忽略调制解调器(modem)控制线路。
+#define CPARENB 0000400		 // 开启输出时产生奇偶位、输入时进行奇偶校验。
+#define CPARODD 0001000		 // 输入/输入校验是奇校验。
+#define HUPCL 0002000		 // 最后进程关闭后挂断。
+#define CLOCAL 0004000		 // 忽略调制解调器(modem)控制线路。
 #define CIBAUD \
 	03600000 /* input baud rate (not used) */ /* 输入波特率(未使用) */
 #define CRTSCTS 020000000000 /* flow control */	  /* 流控制 */
@@ -220,12 +220,12 @@ struct termios
 
 /* c_lflag bits */ /* c_lflag 比特位 */
 // termios 结构中本地模式标志字段c_lflag 的符号常数。
-#define ISIG 0000001 // 当收到字符INTR、QUIT、SUSP 或DSUSP，产生相应的信号。
+#define ISIG 0000001   // 当收到字符INTR、QUIT、SUSP 或DSUSP，产生相应的信号。
 #define ICANON 0000002 // 开启规范模式（熟模式）。
 #define XCASE 0000004  // 若设置了ICANON，则终端是大写字符的。
 #define ECHO 0000010   // 回显输入字符。
-#define ECHOE 0000020 // 若设置了ICANON，则ERASE/WERASE 将擦除前一字符/单词。
-#define ECHOK 0000040 // 若设置了ICANON，则KILL 字符将擦除当前行。
+#define ECHOE 0000020  // 若设置了ICANON，则ERASE/WERASE 将擦除前一字符/单词。
+#define ECHOK 0000040  // 若设置了ICANON，则KILL 字符将擦除当前行。
 #define ECHONL 0000100 // 如设置了ICANON，则即使ECHO 没有开启也回显NL 字符。
 #define NOFLSH 0000200 // 当生成SIGINT 和SIGQUIT 信号时不刷新输入输出队列，当
 // 生成SIGSUSP 信号时，刷新输入队列。
@@ -234,10 +234,10 @@ struct termios
 #define ECHOCTL 0001000 // 若设置了ECHO，则除TAB、NL、START 和STOP 以外的ASCII
 // 控制信号将被回显成象^X 式样，X 值是控制符+0x40。
 #define ECHOPRT 0002000 // 若设置了ICANON 和IECHO，则字符在擦除时将显示。
-#define ECHOKE 0004000 // 若设置了ICANON，则KILL 通过擦除行上的所有字符被回显。
-#define FLUSHO 0010000 // 输出被刷新。通过键入DISCARD 字符，该标志被翻转。
-#define PENDIN 0040000 // 当下一个字符是读时，输入队列中的所有字符将被重显。
-#define IEXTEN 0100000 // 开启实现时定义的输入处理。
+#define ECHOKE 0004000	// 若设置了ICANON，则KILL 通过擦除行上的所有字符被回显。
+#define FLUSHO 0010000	// 输出被刷新。通过键入DISCARD 字符，该标志被翻转。
+#define PENDIN 0040000	// 当下一个字符是读时，输入队列中的所有字符将被重显。
+#define IEXTEN 0100000	// 开启实现时定义的输入处理。
 
 /* modem lines */	/* modem 线路信号符号常数 */
 #define TIOCM_LE 0x001	// 线路允许(Line Enable)。
@@ -256,7 +256,7 @@ struct termios
 #define TCOOFF 0		    // 挂起输出。
 #define TCOON 1			    // 重启被挂起的输出。
 #define TCIOFF 2 // 系统传输一个STOP 字符，使设备停止向系统传输数据。
-#define TCION 3 // 系统传输一个START 字符，使设备开始向系统传输数据。
+#define TCION 3	 // 系统传输一个START 字符，使设备开始向系统传输数据。
 
 /* tcflush() and TCFLSH use these */ /* tcflush()和TCFLSH 使用这些符号常数 */
 #define TCIFLUSH 0		     // 清接收到的数据但不读。
@@ -265,8 +265,8 @@ struct termios
 
 /* tcsetattr uses these */ /* tcsetattr()使用这些符号常数 */
 #define TCSANOW 0	   // 改变立即发生。
-#define TCSADRAIN 1 // 改变在所有已写的输出被传输之后发生。
-#define TCSAFLUSH 2 // 改变在所有已写的输出被传输之后并且在所有接收到但
+#define TCSADRAIN 1	   // 改变在所有已写的输出被传输之后发生。
+#define TCSAFLUSH 2	   // 改变在所有已写的输出被传输之后并且在所有接收到但
 // 还没有读取的数据被丢弃之后发生。
 
 typedef int speed_t; // 波特率数值类型。

@@ -5,11 +5,11 @@
  */
 #include <set_seg.h>
 
-#include <string.h> // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
+#include <string.h>   // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。
 
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
-	  // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
+// 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <linux/mm.h> // 内存管理头文件。含有页面大小定义和一些页面释放函数原型。
 #include <asm/system.h> // 系统头文件。定义了设置或修改描述符/中断门等的嵌入式汇编宏。
@@ -59,7 +59,7 @@ void invalidate_inodes(int dev)
 
 	inode = 0 + inode_table; // 让指针首先指向i 节点表指针数组首项。
 	for (i = 0; i < NR_INODE;
-	     i++, inode++) { // 扫描i 节点表指针数组中的所有i 节点。
+	     i++, inode++) {	      // 扫描i 节点表指针数组中的所有i 节点。
 		wait_on_inode(inode); // 等待该i 节点可用（解锁）。
 		if (inode->i_dev == dev) { // 如果是指定设备的i 节点，则
 			if (inode
@@ -80,7 +80,7 @@ void sync_inodes(void)
 
 	inode = 0 + inode_table; // 让指针首先指向i 节点表指针数组首项。
 	for (i = 0; i < NR_INODE; i++, inode++) { // 扫描i 节点表指针数组。
-		wait_on_inode(inode); // 等待该i 节点可用（解锁）。
+		wait_on_inode(inode);		  // 等待该i 节点可用（解锁）。
 		if (inode->i_dirt &&
 		    !inode->i_pipe) // 如果该i 节点已修改且不是管道节点，
 			write_inode(inode); // 则写盘。
@@ -322,8 +322,8 @@ struct m_inode * get_pipe_inode(void)
 	}
 	inode->i_count = 2;			   /* 读/写两者总计 */
 	PIPE_HEAD(*inode) = PIPE_TAIL(*inode) = 0; // 复位管道头尾指针。
-	inode->i_pipe = 1; // 置节点为管道使用的标志。
-	return inode;	   // 返回i 节点指针。
+	inode->i_pipe = 1;			   // 置节点为管道使用的标志。
+	return inode;				   // 返回i 节点指针。
 }
 
 //// 从设备上读取指定节点号的i 节点。

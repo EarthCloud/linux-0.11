@@ -59,14 +59,14 @@ long kernel_mktime(struct tm * tm)
 	/* 为了获得正确的闰年数，这里需要这样一个魔幻偏值(y+1) */
 	res = YEAR * year +
 	      DAY * ((year + 1) / 4); // 这些年经过的秒数时间 + 每个闰年时多1 天
-	res += month[tm->tm_mon]; // 的秒数时间，在加上当年到当月时的秒数。
+	res += month[tm->tm_mon];     // 的秒数时间，在加上当年到当月时的秒数。
 	/* and (y+2) here. If it wasn't a leap-year, we have to adjust */
 	/* 以及(y+2)。如果(y+2)不是闰年，那么我们就必须进行调整(减去一天的秒数时间)。 */
 	if (tm->tm_mon > 1 && ((year + 2) % 4))
 		res -= DAY;
 	res += DAY * (tm->tm_mday - 1); // 再加上本月过去的天数的秒数时间。
-	res += HOUR * tm->tm_hour; // 再加上当天过去的小时数的秒数时间。
+	res += HOUR * tm->tm_hour;	// 再加上当天过去的小时数的秒数时间。
 	res += MINUTE * tm->tm_min; // 再加上1 小时内过去的分钟数的秒数时间。
-	res += tm->tm_sec; // 再加上1 分钟内已过的秒数。
-	return res;	   // 即等于从1970 年以来经过的秒数时间。
+	res += tm->tm_sec;	    // 再加上1 分钟内已过的秒数。
+	return res;		    // 即等于从1970 年以来经过的秒数时间。
 }

@@ -90,9 +90,9 @@ void truncate(struct m_inode * inode)
 		}
 	free_ind(inode->i_dev, inode->i_zone[7]);  // 释放一次间接块。
 	free_dind(inode->i_dev, inode->i_zone[8]); // 释放二次间接块。
-	inode->i_zone[7] = inode->i_zone[8] = 0; // 逻辑块项7、8 置零。
-	inode->i_size = 0;			 // 文件大小置零。
-	inode->i_dirt = 1;			 // 置节点已修改标志。
+	inode->i_zone[7] = inode->i_zone[8] = 0;   // 逻辑块项7、8 置零。
+	inode->i_size = 0;			   // 文件大小置零。
+	inode->i_dirt = 1;			   // 置节点已修改标志。
 	inode->i_mtime = inode->i_ctime =
 	    CURRENT_TIME; // 重置文件和节点修改时间为当前时间。
 }

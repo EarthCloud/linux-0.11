@@ -13,8 +13,8 @@
 
 #define WIFEXITED(s) (!((s)&0xFF)	// 如果子进程正常退出，则为真。
 #define WIFSTOPPED(s) (((s) & 0xFF) == 0x7F) // 如果子进程正停止着，则为true。
-#define WEXITSTATUS(s) (((s) >> 8) & 0xFF) // 返回退出状态。
-#define WTERMSIG(s) ((s) & 0x7F) // 返回导致进程终止的信号值（信号量）。
+#define WEXITSTATUS(s) (((s) >> 8) & 0xFF)   // 返回退出状态。
+#define WTERMSIG(s) ((s) & 0x7F)	// 返回导致进程终止的信号值（信号量）。
 #define WSTOPSIG(s) (((s) >> 8) & 0xFF) // 返回导致进程停止的信号值。
 #define WIFSIGNALED(s) \
 	(((unsigned int)(s) - 1 & 0xFFFF) < 0xFF) // 如果由于未捕捉到信号

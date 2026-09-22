@@ -26,7 +26,7 @@ __asm__ ( "movl %%esp,%%eax\n\t" \
   "movw %%ax,%%ds\n\t"  // 初始化段寄存器指向本局部表的数据段。
 "movw %%ax,%%es\n\t" "movw %%ax,%%fs\n\t" "movw %%ax,%%gs":::"ax")
 */
-#define sti() __asm__ __volatile__("sti" ::) // 开中断嵌入汇编宏函数。
+#define sti() __asm__ __volatile__("sti" ::)   // 开中断嵌入汇编宏函数。
 #define cli() __asm__ __volatile__("cli" ::)   // 关中断。
 #define nop() __asm__ __volatile__("nop" ::)   // 空操作。
 #define iret() __asm__ __volatile__("iret" ::) // 中断返回。
@@ -84,10 +84,10 @@ __asm__ ( "movw %%dx,%%ax\n\t" \
 		*(gate_addr) =                                              \
 		    ((base) & 0xff000000) | (((base) & 0x00ff0000) >> 16) | \
 		    ((limit) & 0xf0000) | ((dpl) << 13) | (0x00408000) |    \
-		    ((type) << 8); /* 描述符低4 字节。*/             \
+		    ((type) << 8); /* 描述符低4 字节。*/                    \
 		*((gate_addr) + 1) =                                        \
 		    (((base) & 0x0000ffff) << 16) |                         \
-		    ((limit) & 0x0ffff); /* 描述符高4 字节。*/       \
+		    ((limit) & 0x0ffff); /* 描述符高4 字节。*/              \
 	}
 
 //// 在全局表中设置任务状态段/局部表描述符。
@@ -99,13 +99,13 @@ __asm__ ( "movw %%dx,%%ax\n\t" \
 static inline void
 _set_tssldt_desc(unsigned short * n, unsigned long addr, char tp)
 {
-	n[0] = 104; /* 将TSS 长度放入描述符长度域(第0-1 字节)。*/
+	n[0] = 104;	      /* 将TSS 长度放入描述符长度域(第0-1 字节)。*/
 	n[1] = addr & 0xffff; /* 将基地址的低字放入描述符第2-3 字节。*/
-	n[2] = addr >> 16; /* 将基地址的高字放入描述符第4-5 字节。*/
+	n[2] = addr >> 16;    /* 将基地址的高字放入描述符第4-5 字节。*/
 	((char *)n)[7] =
-	    ((char *)n)[5]; /* 基地址高字的高字节 -> 描述符第7 字节。*/
+	    ((char *)n)[5];  /* 基地址高字的高字节 -> 描述符第7 字节。*/
 	((char *)n)[5] = tp; /* 将标志类型字节移入描述符的第5 字节。*/
-	((char *)n)[6] = 0; /* 描述符的第6 字节置0。*/
+	((char *)n)[6] = 0;  /* 描述符的第6 字节置0。*/
 } /*
 __asm__ ( "movw $104,%1\n\t" \
 "movw %%ax,%2\n\t" \

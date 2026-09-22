@@ -8,7 +8,7 @@
 #include <string.h> // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
 #include <errno.h> // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
-	  // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
+// 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。
 
@@ -49,7 +49,7 @@ static int dupfd(unsigned int fd, unsigned int arg)
 // 复制指定文件句柄oldfd，新句柄值等于newfd。如果newfd 已经打开，则首先关闭之。
 int sys_dup2(unsigned int oldfd, unsigned int newfd)
 {
-	sys_close(newfd); // 若句柄newfd 已经打开，则首先关闭之。
+	sys_close(newfd);	    // 若句柄newfd 已经打开，则首先关闭之。
 	return dupfd(oldfd, newfd); // 复制并返回新句柄。
 }
 

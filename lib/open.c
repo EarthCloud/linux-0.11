@@ -11,10 +11,10 @@
 
 #define __LIBRARY__
 #include <unistd.h> // Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。
-	  // 如定义了__LIBRARY__，则还包括系统调用号和内嵌汇编_syscall0()等。
+// 如定义了__LIBRARY__，则还包括系统调用号和内嵌汇编_syscall0()等。
 #include <stdarg.h> // 标准参数头文件。以宏的形式定义变量参数列表。主要说明了-个
-	  // 类型(va_list)和三个宏(va_start, va_arg 和va_end)，用于
-	  // vsprintf、vprintf、vfprintf 函数。
+		    // 类型(va_list)和三个宏(va_start, va_arg 和va_end)，用于
+		    // vsprintf、vprintf、vfprintf 函数。
 
 //// 打开文件函数。
 // 打开并有可能创建一个文件。

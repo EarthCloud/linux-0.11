@@ -8,11 +8,11 @@
 #define _P 0x10 /* punct */ // 该比特位用于标点字符。
 #define _S \
 	0x20 /* white space (space/lf/tab) */ // 用于空白字符，如空格、\t、\n 等。
-#define _X 0x40 /* hex digit */ // 该比特位用于十六进制数字。
-#define _SP 0x80 /* hard space (0x20) */ // 该比特位用于空格字符(0x20)。
+#define _X 0x40 /* hex digit */		      // 该比特位用于十六进制数字。
+#define _SP 0x80 /* hard space (0x20) */      // 该比特位用于空格字符(0x20)。
 
 extern unsigned char
-    _ctype[]; // 字符特性数组(表)，定义了各个字符对应上面的属性。
+    _ctype[];	   // 字符特性数组(表)，定义了各个字符对应上面的属性。
 extern char _ctmp; // 一个临时字符变量(在fs/ctype.c 中定义)。
 
 // 下面是一些确定字符类型的宏。
@@ -27,7 +27,7 @@ extern char _ctmp; // 一个临时字符变量(在fs/ctype.c 中定义)。
 	((_ctype + 1)[c] & (_P | _U | _L | _D | _SP)) // 是可打印字符。
 #define ispunct(c) ((_ctype + 1)[c] & (_P))	      // 是标点符号。
 #define isspace(c) ((_ctype + 1)[c] & (_S)) // 是空白字符如空格,\f,\n,\r,\t,\v。
-#define isupper(c) ((_ctype + 1)[c] & (_U))	  // 是大写字符。
+#define isupper(c) ((_ctype + 1)[c] & (_U)) // 是大写字符。
 #define isxdigit(c) ((_ctype + 1)[c] & (_D | _X)) // 是十六进制数字。
 
 #define isascii(c) (((unsigned)c) <= 0x7f) // 是ASCII 字符。

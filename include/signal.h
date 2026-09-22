@@ -3,7 +3,7 @@
 
 #include <sys/types.h> // 类型头文件。定义了基本的系统数据类型。
 
-typedef int sig_atomic_t; // 定义信号原子操作类型。
+typedef int sig_atomic_t;		     // 定义信号原子操作类型。
 typedef unsigned int sigset_t; /* 32 bits */ // 定义信号集类型。
 
 #define _NSIG 32   // 定义信号种类 -- 32 种。

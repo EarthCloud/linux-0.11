@@ -135,7 +135,8 @@ static inline void end_request(int uptodate)
 }
 
 #define INIT_REQUEST                                             \
-	repeat : if (!CURRENT)                                   \
+repeat:                                                          \
+	if (!CURRENT)                                            \
 		return;                                          \
 	if (MAJOR(CURRENT->dev) != MAJOR_NR)                     \
 		panic(DEVICE_NAME ": request list destroyed");   \

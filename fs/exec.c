@@ -19,13 +19,13 @@
  */
 
 #include <errno.h> // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。
-#include <string.h> // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
+#include <string.h>   // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。
-#include <a.out.h> // a.out 头文件。定义了a.out 执行文件格式和一些宏。
+#include <a.out.h>    // a.out 头文件。定义了a.out 执行文件格式和一些宏。
 
 #include <linux/fs.h> // 文件系统头文件。定义文件表结构（file,buffer_head,m_inode 等）。
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
-	  // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
+// 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <linux/mm.h> // 内存管理头文件。含有页面大小定义和一些页面释放函数原型。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。

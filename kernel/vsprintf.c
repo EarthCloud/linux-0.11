@@ -30,12 +30,12 @@ static int skip_atoi(const char ** s)
 }
 
 // 这里定义转换类型的各种符号常数。
-#define ZEROPAD 1 /* pad with zero */	  /* 填充零 */
-#define SIGN 2 /* unsigned/signed long */ /* 无符号/符号长整数 */
-#define PLUS 4 /* show plus */		  /* 显示加 */
-#define SPACE 8 /* space if plus */	  /* 如是加，则置空格 */
-#define LEFT 16 /* left justified */	  /* 左调整 */
-#define SPECIAL 32 /* 0x */		  /* 0x */
+#define ZEROPAD 1 /* pad with zero */			/* 填充零 */
+#define SIGN 2 /* unsigned/signed long */		/* 无符号/符号长整数 */
+#define PLUS 4 /* show plus */				/* 显示加 */
+#define SPACE 8 /* space if plus */			/* 如是加，则置空格 */
+#define LEFT 16 /* left justified */			/* 左调整 */
+#define SPECIAL 32 /* 0x */				/* 0x */
 #define SMALL 64 /* use 'abcdef' instead of 'ABCDEF' */ /* 使用小写字母 */
 
 // 除操作。输入：n 为被除数，base 为除数；结果：n 为商，函数返回值为余数。
@@ -163,7 +163,7 @@ int vsprintf(char * buf, const char * fmt, va_list args)
 				   number of chars for from string */
 	/* min. 整数数字个数；max. 字符串中字符个数 */
 	int qualifier; /* 'h', 'l', or 'L' for integer fields */
-		       /* 'h', 'l',或'L'用于整数字段 */
+	/* 'h', 'l',或'L'用于整数字段 */
 	// 首先将字符指针指向buf，然后扫描格式字符串，对各个格式转换指示进行相应的处理。
 	for (str = buf; *fmt; ++fmt) {
 		// 格式转换指示字符串均以'%'开始，这里从fmt 格式字符串中扫描'%'，寻找格式转换字符串的开始。
@@ -345,6 +345,6 @@ repeat:
 			break;
 		}
 	}
-	*str = '\0'; // 最后在转换好的字符串结尾处添上null。
+	*str = '\0';	  // 最后在转换好的字符串结尾处添上null。
 	return str - buf; // 返回转换好的字符串长度值。
 }

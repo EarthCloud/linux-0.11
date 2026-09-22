@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 #include <time.h> // 时间类型头文件。其中最主要定义了tm 结构和一些有关
-	  // 时间的函数原形。
+		  // 时间的函数原形。
 
 /*
  * 我们需要下面这些内嵌语句- 从内核空间创建进程(forking)将导致没有写时复
@@ -45,43 +45,43 @@ static inline _syscall0(int,
     static inline _syscall0(int, sync) // int sync()系统调用：更新文件系统。
 #include <unistd.h>
 
-#include <linux/tty.h> // tty 头文件，定义了有关tty_io，串行通信方面的
-		       // 参数、常数。
+#include <linux/tty.h>	 // tty 头文件，定义了有关tty_io，串行通信方面的
+			 // 参数、常数。
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、第1 个
-	  // 初始任务的数据。还有一些以宏的形式定义的有关描述符
-	  // 参数设置和获取的嵌入式汇编函数程序。
-#include <linux/head.h> // head 头文件，定义了段描述符的简单结构，
-			// 和几个选择符常量。
-#include <asm/system.h> // 系统头文件。以宏的形式定义了许多有关设置或修改
-	  // 描述符/中断门等的嵌入式汇编子程序。
-#include <asm/io.h> // io 头文件。以宏的嵌入汇编程序形式定义对io 端
-		    // 口操作的函数。
+			 // 初始任务的数据。还有一些以宏的形式定义的有关描述符
+			 // 参数设置和获取的嵌入式汇编函数程序。
+#include <linux/head.h>	 // head 头文件，定义了段描述符的简单结构，
+			 // 和几个选择符常量。
+#include <asm/system.h>	 // 系统头文件。以宏的形式定义了许多有关设置或修改
+			 // 描述符/中断门等的嵌入式汇编子程序。
+#include <asm/io.h>	 // io 头文件。以宏的嵌入汇编程序形式定义对io 端
+			 // 口操作的函数。
 
-#include <stddef.h> // 标准定义头文件。定义了NULL, offsetof(TYPE, MEMBER)。
-#include <stdarg.h> // 标准参数头文件。以宏的形式定义变量参数列表。主要说
-	  // 明了-个类型(va_list)和三个宏(va_start, va_arg 和
-	  // va_end)，vsprintf、vprintf、vfprintf。
-#include <fcntl.h> // 文件控制头文件。用于文件及其描述符的操作控制常数
-	  // 符号的定义。
+#include <stddef.h>    // 标准定义头文件。定义了NULL, offsetof(TYPE, MEMBER)。
+#include <stdarg.h>    // 标准参数头文件。以宏的形式定义变量参数列表。主要说
+		       // 明了-个类型(va_list)和三个宏(va_start, va_arg 和
+		       // va_end)，vsprintf、vprintf、vfprintf。
+#include <fcntl.h>     // 文件控制头文件。用于文件及其描述符的操作控制常数
+		       // 符号的定义。
 #include <sys/types.h> // 类型头文件。定义了基本的系统数据类型。
 
 #include <linux/fs.h> // 文件系统头文件。定义文件表结构
-	  //（file,buffer_head,m_inode 等）。
+		      //（file,buffer_head,m_inode 等）。
 
     static char printbuf[1024];
 
-extern int vsprintf(); // 送格式化输出到一字符串中（在kernel/vsprintf.c）。
+extern int vsprintf();	// 送格式化输出到一字符串中（在kernel/vsprintf.c）。
 extern void init(void); // 函数原形，初始化（在后面）。
 extern void
 blk_dev_init(void); // 块设备初始化子程序（kernel/blk_drv/ll_rw_blk.c）
 extern void chr_dev_init(void); // 字符设备初始化（kernel/chr_drv/tty_io.c）
-extern void hd_init(void);     // 硬盘初始化程序（kernel/blk_drv/hd.c）
-extern void floppy_init(void); // 软驱初始化程序（kernel/blk_drv/floppy.c）
+extern void hd_init(void);	// 硬盘初始化程序（kernel/blk_drv/hd.c）
+extern void floppy_init(void);	// 软驱初始化程序（kernel/blk_drv/floppy.c）
 extern void mem_init(long start, long end); // 内存管理初始化（mm/memory.c）
 extern long rd_init(long mem_start,
 		    int length); //虚拟盘初始化(kernel/blk_drv/ramdisk.c)
 extern long kernel_mktime(struct tm * tm); // 建立内核时间（秒）。
-extern long startup_time; // 内核启动时间（开机时间）（秒）。
+extern long startup_time;		   // 内核启动时间（开机时间）（秒）。
 
 /*
  * 以下这些数据是由setup.s 程序在引导时间设置的。
@@ -156,7 +156,7 @@ void main(void) /* 这里确实是void，并没错。 */
 	drive_info = DRIVE_INFO;
 	memory_end =
 	    (1 << 20) +
-	    (EXT_MEM_K << 10); // 内存大小=1Mb 字节+扩展内存(k)*1024 字节。
+	    (EXT_MEM_K << 10);	  // 内存大小=1Mb 字节+扩展内存(k)*1024 字节。
 	memory_end &= 0xfffff000; // 忽略不到4Kb（1 页）的内存数。
 	if (memory_end > 16 * 1024 * 1024) // 如果内存超过16Mb，则按16Mb 计。
 		memory_end = 16 * 1024 * 1024;
@@ -175,17 +175,17 @@ void main(void) /* 这里确实是void，并没错。 */
 	// 以下是内核进行所有方面的初始化工作。阅读时最好跟着调用的程序深入进去看，实在看
 	// 不下去了，就先放一放，看下一个初始化调用-- 这是经验之谈:)
 	mem_init(main_memory_start, memory_end);
-	trap_init(); // 陷阱门（硬件中断向量）初始化。（kernel/traps.c）
+	trap_init();	// 陷阱门（硬件中断向量）初始化。（kernel/traps.c）
 	blk_dev_init(); // 块设备初始化。（kernel/blk_dev/ll_rw_blk.c）
 	chr_dev_init(); // 字符设备初始化。（kernel/chr_dev/tty_io.c）空，为以后扩展做准备。
-	tty_init();	// tty 初始化。（kernel/chr_dev/tty_io.c）
-	time_init();	// 设置开机启动时间 -> startup_time。
+	tty_init();  // tty 初始化。（kernel/chr_dev/tty_io.c）
+	time_init(); // 设置开机启动时间 -> startup_time。
 	sched_init(); // 调度程序初始化(加载了任务0 的tr, ldtr) （kernel/sched.c）
 	buffer_init(
 	    buffer_memory_end); // 缓冲管理初始化，建内存链表等。（fs/buffer.c）
-	hd_init();     // 硬盘初始化。（kernel/blk_dev/hd.c）
-	floppy_init(); // 软驱初始化。（kernel/blk_dev/floppy.c）
-	sti();	       // 所有初始化工作都做完了，开启中断。
+	hd_init();		// 硬盘初始化。（kernel/blk_dev/hd.c）
+	floppy_init();		// 软驱初始化。（kernel/blk_dev/floppy.c）
+	sti();			// 所有初始化工作都做完了，开启中断。
 
 	// 下面过程通过在堆栈中设置的参数，利用中断返回指令切换到任务0。
 	move_to_user_mode(); // 移到用户模式。（include/asm/system.h）
@@ -220,7 +220,7 @@ static int printf(const char * fmt, ...)
 }
 
 static char * argv_rc[] = {"/bin/sh", NULL}; // 调用执行程序时参数的字符串数组。
-static char * envp_rc[] = {"HOME=/", NULL}; // 调用执行程序时的环境字符串数组。
+static char * envp_rc[] = {"HOME=/", NULL};  // 调用执行程序时的环境字符串数组。
 
 static char * argv[] = {"-/bin/sh", NULL}; // 同上。
 static char * envp[] = {"HOME=/usr/root", NULL};
@@ -236,8 +236,8 @@ void init(void)
 	(void)open("/dev/tty0",
 		   O_RDWR,
 		   0); // 用读写访问方式打开设备“/dev/tty0”，
-		       // 这里对应终端控制台。
-		       // 返回的句柄号0 -- stdin 标准输入设备。
+	// 这里对应终端控制台。
+	// 返回的句柄号0 -- stdin 标准输入设备。
 	(void)dup(0); // 复制句柄，产生句柄1 号-- stdout 标准输出设备。
 	(void)dup(0); // 复制句柄，产生句柄2 号-- stderr 标准出错输出设备。
 	printf("%d buffers = %d bytes buffer space\n\r",

@@ -15,6 +15,6 @@ typedef unsigned long size_t; // sizeof 返回的类型。
 #define NULL 0 // 空指针。
 
 #define offsetof(TYPE, MEMBER) \
-	((size_t) & ((TYPE *)0)->MEMBER) // 成员在类型中的偏移位置。
+	((size_t)&((TYPE *)0)->MEMBER) // 成员在类型中的偏移位置。
 
 #endif

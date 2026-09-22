@@ -2,7 +2,7 @@
 #define _HEAD_H
 
 typedef struct desc_struct
-{ // 定义了段描述符的数据结构。该结构仅说明每个描述
+{			    // 定义了段描述符的数据结构。该结构仅说明每个描述
 	unsigned long a, b; // 符是由8 个字节构成，每个描述符表共有256 项。
 } desc_table[256];
 

@@ -13,7 +13,7 @@
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。
 
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
-	  // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
+// 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
 #include <linux/tty.h> // tty 头文件，定义了有关tty_io，串行通信方面的参数、常数。
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。

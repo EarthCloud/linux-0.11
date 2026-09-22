@@ -16,6 +16,14 @@
 #   git clang-format                    只格式化本次改动的行
 #   clang-format --dry-run -Werror <f>  只检查、不修改
 #
+# ★ 版本要求：clang-format **21.1.8**
+#
+# clang-format 的输出跟版本绑定：同一份配置，18.1.3 与 21.1.8 会在 41 个文件上
+# 产生差异（多行宏的续行对齐、行尾注释用 TAB 还是空格、宏体折行方式）。
+# 本仓库以 21.1.8 为准 —— 它和 VS Code clangd 扩展 21.1.8 内置的 clang-format 一致，
+# 所以在编辑器里按格式化键不会再把文件改乱（前提是编辑器也用 21.1.8）。
+# 换版本前请先全仓对齐一次，否则每按一次格式化都会产生无意义的改动。
+#
 # 注意：boot/*.s、kernel/system_call.s、mm/page.s、kb.S、rs_io.s 是 GNU as 汇编，
 # 不能喂给 clang-format（它按 C/C++ 解析会把汇编改坏）。只格式化 *.c / *.h。
 #

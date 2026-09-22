@@ -103,7 +103,7 @@ extern void floppy_deselect(unsigned int nr);
 // 设定驱动器参数（步进速率、磁头卸载时间等）。
 
 /* DMA 命令 */
-#define DMA_READ 0x46 // DMA 读盘，DMA 方式字（送DMA 端口12，11）。
+#define DMA_READ 0x46  // DMA 读盘，DMA 方式字（送DMA 端口12，11）。
 #define DMA_WRITE 0x4A // DMA 写盘，DMA 方式字。
 
 #endif

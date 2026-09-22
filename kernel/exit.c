@@ -194,7 +194,7 @@ int sys_waitpid(pid_t pid, unsigned long * stat_addr, int options)
 repeat:
 	flag = 0;
 	for (p = &LAST_TASK; p > &FIRST_TASK;
-	     --p) { // 从任务数组末端开始扫描所有任务。
+	     --p) {			  // 从任务数组末端开始扫描所有任务。
 		if (!*p || *p == current) // 跳过空项和本进程项。
 			continue;
 		if ((*p)->father !=
@@ -222,16 +222,16 @@ repeat:
 			    (*p)->utime; // 更新当前进程的子进程用户
 			current->cstime += (*p)->stime; // 态和核心态运行时间。
 			flag = (*p)->pid;
-			code = (*p)->exit_code; // 取子进程的退出码。
-			release(*p);		// 释放该子进程。
+			code = (*p)->exit_code;	      // 取子进程的退出码。
+			release(*p);		      // 释放该子进程。
 			put_fs_long(code, stat_addr); // 置状态信息为退出码值。
-			return flag; // 退出，返回子进程的pid.
+			return flag;		      // 退出，返回子进程的pid.
 		default:
 			flag = 1; // 如果子进程不在停止或僵死状态，则flag=1。
 			continue;
 		}
 	}
-	if (flag) { // 如果子进程没有处于退出或僵死状态，
+	if (flag) {		       // 如果子进程没有处于退出或僵死状态，
 		if (options & WNOHANG) // 并且options = WNOHANG，则立刻返回。
 			return 0;
 		current->state =

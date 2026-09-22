@@ -13,7 +13,7 @@
 #include <linux/kernel.h> // 内核头文件。含有一些内核常用函数的原形定义。
 #include <linux/tty.h> // tty 头文件，定义了有关tty_io，串行通信方面的参数、常数。
 
-#include <asm/io.h> // io 头文件。定义硬件端口输入/输出宏汇编语句。
+#include <asm/io.h>	 // io 头文件。定义硬件端口输入/输出宏汇编语句。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。
 #include <asm/system.h> // 系统头文件。定义了设置或修改描述符/中断门等的嵌入式汇编宏。
 
@@ -37,7 +37,7 @@ static void change_speed(struct tty_struct * tty)
 	quot = quotient[tty->termios.c_cflag & CBAUD];
 	cli();				       // 关中断。
 	outb_p(0x80, port + 3); /* set DLAB */ // 首先设置除数锁定标志DLAB。
-	outb_p(quot & 0xff, port); /* LS of divisor */ // 输出因子低字节。
+	outb_p(quot & 0xff, port); /* LS of divisor */	 // 输出因子低字节。
 	outb_p(quot >> 8, port + 1); /* MS of divisor */ // 输出因子高字节。
 	outb(0x03, port + 3); /* reset DLAB */		 // 复位DLAB。
 	sti();						 // 开中断。
@@ -235,8 +235,8 @@ int tty_ioctl(int dev, int cmd, int arg)
 	case TIOCSCTTY:
 		// 设置tty 为控制终端。(TIOCNOTTY - 禁止tty 为控制终端)。
 		return -EINVAL;
-		    /* set controlling term NI */ /* 设置控制终端NI */
-	case TIOCGPGRP:				  // NI - Not Implemented。
+		/* set controlling term NI */ /* 设置控制终端NI */
+	case TIOCGPGRP:			      // NI - Not Implemented。
 		// 读取指定终端设备进程的组id。首先验证用户缓冲区长度，然后复制tty 的pgrp 字段到用户缓冲区。
 		verify_area((void *)arg, 4);
 		put_fs_long(tty->pgrp, (unsigned long *)arg);

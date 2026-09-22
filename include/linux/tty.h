@@ -84,7 +84,7 @@ eol2=\0
 // 控制字符对应的ASCII 码值。[8 进制]
 #define INIT_C_CC "\003\034\177\025\004\0\1\0\021\023\032\0\022\017\027\026\0"
 
-void rs_init(void); // 异步串行通信初始化。(kernel/chr_drv/serial.c, 37)
+void rs_init(void);  // 异步串行通信初始化。(kernel/chr_drv/serial.c, 37)
 void con_init(void); // 控制终端初始化。 (kernel/chr_drv/console.c, 617)
 void tty_init(void); // tty 初始化。 (kernel/chr_drv/tty_io.c, 105)
 

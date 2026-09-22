@@ -125,18 +125,18 @@ int copy_process(int nr,
 	p->counter = p->priority;
 	p->signal = 0; // 信号位图置0。
 	p->alarm = 0;
-	p->leader = 0;		 /* process leadership doesn't inherit */
-				 /* 进程的领导权是不能继承的 */
-	p->utime = p->stime = 0; // 初始化用户态时间和核心态时间。
+	p->leader = 0;		   /* process leadership doesn't inherit */
+				   /* 进程的领导权是不能继承的 */
+	p->utime = p->stime = 0;   // 初始化用户态时间和核心态时间。
 	p->cutime = p->cstime = 0; // 初始化子进程用户态和核心态时间。
-	p->start_time = jiffies; // 当前滴答数时间。
+	p->start_time = jiffies;   // 当前滴答数时间。
 	// 以下设置任务状态段TSS 所需的数据（参见列表后说明）。
 	p->tss.back_link = 0;
 	p->tss.esp0 =
 	    PAGE_SIZE + (long)p; // 堆栈指针（由于是给任务结构p 分配了1 页
 	// 新内存，所以此时esp0 正好指向该页顶端）。
-	p->tss.ss0 = 0x10; // 堆栈段选择符（内核数据段）[??]。
-	p->tss.eip = eip;  // 指令代码指针。
+	p->tss.ss0 = 0x10;	// 堆栈段选择符（内核数据段）[??]。
+	p->tss.eip = eip;	// 指令代码指针。
 	p->tss.eflags = eflags; // 标志寄存器。
 	p->tss.eax = 0;
 	p->tss.ecx = ecx;

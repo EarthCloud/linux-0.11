@@ -2,7 +2,7 @@
 #define _SCHED_H
 
 #define NR_TASKS 64 // 系统中同时最多任务（进程）数。
-#define HZ 100 // 定义系统时钟滴答频率(1 百赫兹，每个滴答10ms)
+#define HZ 100	    // 定义系统时钟滴答频率(1 百赫兹，每个滴答10ms)
 
 #define FIRST_TASK task[0] // 任务0 比较特殊，所以特意给它单独定义一个符号。
 #define LAST_TASK task[NR_TASKS - 1] // 任务数组中的最后一项任务。
@@ -20,8 +20,8 @@
 #define TASK_RUNNING 0	     // 进程正在运行或已准备就绪。
 #define TASK_INTERRUPTIBLE 1 // 进程处于可中断等待状态。
 #define TASK_UNINTERRUPTIBLE \
-	2 // 进程处于不可中断等待状态，主要用于I/O 操作等待。
-#define TASK_ZOMBIE 3 // 进程处于僵死状态，已经停止运行，但父进程还没发信号。
+	2	       // 进程处于不可中断等待状态，主要用于I/O 操作等待。
+#define TASK_ZOMBIE 3  // 进程处于僵死状态，已经停止运行，但父进程还没发信号。
 #define TASK_STOPPED 4 // 进程已停止。
 
 #ifndef NULL
@@ -171,47 +171,76 @@ struct task_struct
 * 基址Base = 0，段长limit = 0x9ffff（=640kB）。
 */
 // 对应上面任务结构的第1 个任务的信息。
-#define INIT_TASK                                                                                      \
-	{                                                                                              \
-		/* state etc */ 0, 15, 15, /* signals */ 0,                                            \
-		    {                                                                                  \
-			{0},                                                                           \
-		    },                                                                                 \
-		    0, /* ec,brk... */ 0, 0, 0, 0, 0, 0, /* pid etc.. */ 0,                            \
-		    -1, 0, 0, 0, /* uid etc */ 0, 0, 0, 0, 0, 0,                                       \
-		    /* alarm */ 0, 0, 0, 0, 0, 0, /* math */ 0,                                        \
-		    /* fs info */ -1, 0022, NULL, NULL, NULL, 0, /* filp */                            \
-		    {                                                                                  \
-			NULL,                                                                          \
-		    },                                                                                 \
-		    /* ldt[3]*/                                                                        \
-		    {                                                                                  \
-			{0, 0},                                                                        \
-			{0x9f,                                                                         \
-			 0xc0fa00}, /* 代码长640K，基址0x0，G=1，D=1，DPL=3，P=1 TYPE=0x0a*/ \
-			{0x9f, 0xc0f200},                                                              \
-		    }, /* 数据长640K，基址0x0，G=1，D=1，DPL=3，P=1 TYPE=0x02*/              \
-		    /*tss*/ {0,	      PAGE_SIZE + (long)(&init_task),                                  \
-			     0x10,    0,                                                               \
-			     0,	      0,                                                               \
-			     0,	      (long)&pg_dir,                                                   \
-			     0,	      0,                                                               \
-			     0,	      0,                                                               \
-			     0,	      0,                                                               \
-			     0,	      0,                                                               \
-			     0,	      0,                                                               \
-			     0x17,    0x17,                                                            \
-			     0x17,    0x17,                                                            \
-			     0x17,    0x17,                                                            \
-			     _LDT(0), 0x80000000,                                                      \
-			     {0}},                                                                     \
+#define INIT_TASK                                                                    \
+	{                                                                            \
+	    /* state etc */ 0,                                                       \
+	    15,                                                                      \
+	    15,                                                                      \
+	    /* signals */ 0,                                                         \
+	    {                                                                        \
+		{0},                                                                 \
+	    },                                                                       \
+	    0,                                                                       \
+	    /* ec,brk... */ 0,                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    /* pid etc.. */ 0,                                                       \
+	    -1,                                                                      \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    /* uid etc */ 0,                                                         \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    /* alarm */ 0,                                                           \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    0,                                                                       \
+	    /* math */ 0,                                                            \
+	    /* fs info */ -1,                                                        \
+	    0022,                                                                    \
+	    NULL,                                                                    \
+	    NULL,                                                                    \
+	    NULL,                                                                    \
+	    0, /* filp */                                                            \
+	    {                                                                        \
+		NULL,                                                                \
+	    }, /* ldt[3]*/                                                           \
+	    {                                                                        \
+		{0, 0},                                                              \
+		{0x9f,                                                               \
+		 0xc0fa00}, /* 代码长640K，基址0x0，G=1，D=1，DPL=3，P=1 TYPE=0x0a*/ \
+		{0x9f, 0xc0f200},                                                    \
+	    }, /* 数据长640K，基址0x0，G=1，D=1，DPL=3，P=1 TYPE=0x02*/              \
+	    /*tss*/ {0,	      PAGE_SIZE + (long)(&init_task),                        \
+		     0x10,    0,                                                     \
+		     0,	      0,                                                     \
+		     0,	      (long)&pg_dir,                                         \
+		     0,	      0,                                                     \
+		     0,	      0,                                                     \
+		     0,	      0,                                                     \
+		     0,	      0,                                                     \
+		     0,	      0,                                                     \
+		     0x17,    0x17,                                                  \
+		     0x17,    0x17,                                                  \
+		     0x17,    0x17,                                                  \
+		     _LDT(0), 0x80000000,                                            \
+		     {0}},                                                           \
 	}
 
-extern struct task_struct * task[NR_TASKS]; // 任务数组。
+extern struct task_struct * task[NR_TASKS];	 // 任务数组。
 extern struct task_struct * last_task_used_math; // 上一个使用过协处理器的进程。
-extern struct task_struct * current; // 当前进程结构指针变量。
+extern struct task_struct * current;		 // 当前进程结构指针变量。
 extern long volatile jiffies; // 从开机开始算起的滴答数（10ms/滴答）。
-extern long startup_time; // 开机时间。从1970:0:0:0 开始计时的秒数。
+extern long startup_time;     // 开机时间。从1970:0:0:0 开始计时的秒数。
 
 #define CURRENT_TIME (startup_time + jiffies / HZ) // 当前时间（秒数）。
 
@@ -255,7 +284,7 @@ static inline void lldt(unsigned long n)
 static inline void _str(unsigned long n)
 {
 	unsigned long __tmp;
-	__asm__("str %%ax\n\t" /* 将任务寄存器中TSS 段的有效地址 -> ax */
+	__asm__("str %%ax\n\t"	    /* 将任务寄存器中TSS 段的有效地址 -> ax */
 		"subl %2,%%eax\n\t" /* (eax - FIRST_TSS_ENTRY*8) -> eax */
 		"shrl $4,%%eax"	    /* (eax/16) -> eax = 当前任务号 */
 		: "=&a"(__tmp)
@@ -278,25 +307,25 @@ __asm__( "str %%ax\n\t"	// 将任务寄存器中TSS 段的有效地址->ax \
 // 其中临时数据结构__tmp 中，a 的值是32 位偏移值，b 为新TSS 的选择符。在任务切换时，a 值
 // 没有用（忽略）。在判断新任务上次执行是否使用过协处理器时，是通过将新任务状态段的地址与
 // 保存在last_task_used_math 变量中的使用过协处理器的任务状态段的地址进行比较而作出的。
-#define switch_to(n)                                                                                 \
-	{                                                                                            \
-		struct                                                                               \
-		{                                                                                    \
-			long a, b;                                                                   \
-		} __tmp;                                                                             \
-		__asm__(                                                                             \
-		    "cmpl %%ecx,current\n\t"                                                         \
-		    "je 1f\n\t"                                                                      \
-		    "movw %%dx,%1\n\t"                                                               \
-		    "xchgl %%ecx,current\n\t"                                                        \
+#define switch_to(n)                                                             \
+	{                                                                        \
+		struct                                                           \
+		{                                                                \
+			long a, b;                                               \
+		} __tmp;                                                         \
+		__asm__(                                                         \
+		    "cmpl %%ecx,current\n\t"                                     \
+		    "je 1f\n\t"                                                  \
+		    "movw %%dx,%1\n\t"                                           \
+		    "xchgl %%ecx,current\n\t"                                    \
 		    "ljmp *%0\n\t" /* 在任务切换回来后才会继续执行下面的语句。*/ \
-		    "cmpl %%ecx,last_task_used_math\n\t"                                             \
-		    "jne 1f\n\t"                                                                     \
-		    "clts\n"                                                                         \
-		    "1:" ::"m"(*&__tmp.a),                                                           \
-		    "m"(*&__tmp.b),                                                                  \
-		    "d"(_TSS(n)),                                                                    \
-		    "c"((long)task[n]));                                                             \
+		    "cmpl %%ecx,last_task_used_math\n\t"                         \
+		    "jne 1f\n\t"                                                 \
+		    "clts\n"                                                     \
+		    "1:" ::"m"(*&__tmp.a),                                       \
+		    "m"(*&__tmp.b),                                              \
+		    "d"(_TSS(n)),                                                \
+		    "c"((long)task[n]));                                         \
 	}
 /*
 #define switch_to(n) {\
@@ -323,7 +352,7 @@ static inline void _set_base(unsigned short * addr, unsigned long base)
 {
 	__asm__(
 	    "push %%edx\n\t"
-	    "movw %%dx,%0\n\t" /* 基址base 低16 位(位15-0) -> [addr+2]。*/
+	    "movw %%dx,%0\n\t"	 /* 基址base 低16 位(位15-0) -> [addr+2]。*/
 	    "rorl $16,%%edx\n\t" /* edx 中基址高16 位(位31-16) -> dx。*/
 	    "movb %%dl,%1\n\t" /* 基址高16 位中的低8 位(位23-16) -> [addr+4]。*/
 	    "movb %%dh,%2\n\t" /* 基址高16 位中的高8 位(位31-24) -> [addr+7]。*/
@@ -345,12 +374,12 @@ static inline void _set_limit(unsigned short * addr, unsigned long limit)
 {
 	__asm__(
 	    "push %%edx\n\t"
-	    "movw %%dx,%0\n\t" /* 段长limit 低16 位(位15-0) -> [addr]。*/
+	    "movw %%dx,%0\n\t"	 /* 段长limit 低16 位(位15-0) -> [addr]。*/
 	    "rorl $16,%%edx\n\t" /* edx 中的段长高4 位(位19-16) -> dl。*/
-	    "movb %1,%%dh\n\t" /* 取原[addr+6]字节 -> dh，其中高4 位是标志。*/
+	    "movb %1,%%dh\n\t"	 /* 取原[addr+6]字节 -> dh，其中高4 位是标志。*/
 	    "andb $0xf0,%%dh\n\t" /* 清dh 的低4 位(将存放段长的位19-16)。*/
-	    "orb %%dh,%%dl\n\t" /* 原高4 位标志与段长高4 位合成1 字节，*/
-	    "movb %%dl,%1\n\t" /* 并放回[addr+6]处。*/
+	    "orb %%dh,%%dl\n\t"	  /* 原高4 位标志与段长高4 位合成1 字节，*/
+	    "movb %%dl,%1\n\t"	  /* 并放回[addr+6]处。*/
 	    "pop %%edx" ::"m"(*((char *)addr)),
 	    "m"(*((char *)addr + 6)),
 	    "d"(limit));
@@ -383,8 +412,8 @@ static inline unsigned long _get_base(void * addr)
 	__asm__("movb %3,%%dh\n\t" /* 取[addr+7]处基址高16 位的高8 位 -> dh。*/
 		"movb %2,%%dl\n\t" /* 取[addr+4]处基址高16 位的低8 位 -> dl。*/
 		"shll $16,%%edx\n\t" /* 基地址高16 位移到edx 中高16 位处。*/
-		"movw %1,%%dx"	/* 取[addr+2]处基址低16 位 -> dx。*/
-		: "=&d"(__base) /* 从而edx 中含有32 位的段基地址。*/
+		"movw %1,%%dx"	     /* 取[addr+2]处基址低16 位 -> dx。*/
+		: "=&d"(__base)	     /* 从而edx 中含有32 位的段基地址。*/
 		: "m"(*((char *)addr + 2)),
 		  "m"(*((char *)addr + 4)),
 		  "m"(*((char *)addr + 7)));
@@ -410,7 +439,7 @@ static inline unsigned long get_limit(unsigned long segment)
 	__asm__("lsll %1,%0\n\tincl %0"
 		: "=r"(__limit)
 		: "r"(segment)); /* 取段长：lsl 得到的是最后一个有效字节偏移。*/
-	return __limit; /* 加1 后才是段的字节长度。*/
+	return __limit;		 /* 加1 后才是段的字节长度。*/
 }
 /*
 unsigned long __limit; \

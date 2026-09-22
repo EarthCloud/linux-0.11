@@ -39,8 +39,8 @@
 // 取termios 结构中本地模式标志集中的一个标志位。
 #define L_CANON(tty) \
 	_L_FLAG((tty), ICANON) // 取本地模式标志集中规范（熟）模式标志位。
-#define L_ISIG(tty) _L_FLAG((tty), ISIG) // 取信号标志位。
-#define L_ECHO(tty) _L_FLAG((tty), ECHO) // 取回显字符标志位。
+#define L_ISIG(tty) _L_FLAG((tty), ISIG)   // 取信号标志位。
+#define L_ECHO(tty) _L_FLAG((tty), ECHO)   // 取回显字符标志位。
 #define L_ECHOE(tty) _L_FLAG((tty), ECHOE) // 规范模式时，取回显擦出标志位。
 #define L_ECHOK(tty) \
 	_L_FLAG((tty), ECHOK) // 规范模式时，取KILL 擦除当前行标志位。
@@ -61,7 +61,7 @@
 #define O_NLCR(tty) _O_FLAG((tty), ONLCR) // 取换行符NL 转回车换行符CR-NL 标志。
 #define O_CRNL(tty) _O_FLAG((tty), OCRNL) // 取回车符CR 转换行符NL 标志。
 #define O_NLRET(tty) _O_FLAG((tty), ONLRET) // 取换行符NL 执行回车功能的标志。
-#define O_LCUC(tty) _O_FLAG((tty), OLCUC) // 取小写转大写字符标志。
+#define O_LCUC(tty) _O_FLAG((tty), OLCUC)   // 取小写转大写字符标志。
 
 // tty 数据结构的tty_table 数组。其中包含三个初始化项数据，分别对应控制台、串口终端1 和
 // 串口终端2 的初始化数据。
@@ -69,9 +69,9 @@ struct tty_struct tty_table[] = {
     {
 	{
 	    //termios
-	    ICRNL,	   /* 将输入的CR 转换为NL */
-	    OPOST | ONLCR, /* 将输出的NL 转CRNL */
-	    0,		   // 控制模式标志初始化为0。
+	    ICRNL,				     /* 将输入的CR 转换为NL */
+	    OPOST | ONLCR,			     /* 将输出的NL 转CRNL */
+	    0,					     // 控制模式标志初始化为0。
 	    ISIG | ICANON | ECHO | ECHOCTL | ECHOKE, // 本地模式标志。
 	    0,					     /* 控制台termio。 */
 	    INIT_C_CC				     // 控制字符数组。
@@ -94,13 +94,13 @@ struct tty_struct tty_table[] = {
 	 /* no translation */ // 输入模式标志。0，无须转换。
 	 0,
 	 /* no translation */ // 输出模式标志。0，无须转换。
-	     B2400 | CS8, // 控制模式标志。波特率2400bps，8 位数据位。
-	 0,		  // 本地模式标志0。
-	 0,		  // 行规程0。
-	 INIT_C_CC}, // 控制字符数组。
-	0,	     // 所属初始进程组。
-	0,	     // 初始停止标志。
-	rs_write,    // 串口1 tty 写函数指针。
+	     B2400 | CS8,     // 控制模式标志。波特率2400bps，8 位数据位。
+	 0,		      // 本地模式标志0。
+	 0,		      // 行规程0。
+	 INIT_C_CC},	      // 控制字符数组。
+	0,		      // 所属初始进程组。
+	0,		      // 初始停止标志。
+	rs_write,	      // 串口1 tty 写函数指针。
 	{0x3f8, 0, 0, 0, ""},
 	/* rs 1 */	      // 串行终端1 读缓冲队列。
 	{0x3f8, 0, 0, 0, ""}, // 串行终端1 写缓冲队列。
@@ -111,13 +111,13 @@ struct tty_struct tty_table[] = {
 	 /* no translation */ // 输入模式标志。0，无须转换。
 	 0,
 	 /* no translation */ // 输出模式标志。0，无须转换。
-	     B2400 | CS8, // 控制模式标志。波特率2400bps，8 位数据位。
-	 0,		  // 本地模式标志0。
-	 0,		  // 行规程0。
-	 INIT_C_CC}, // 控制字符数组。
-	0,	     // 所属初始进程组。
-	0,	     // 初始停止标志。
-	rs_write,    // 串口2 tty 写函数指针。
+	     B2400 | CS8,     // 控制模式标志。波特率2400bps，8 位数据位。
+	 0,		      // 本地模式标志0。
+	 0,		      // 行规程0。
+	 INIT_C_CC},	      // 控制字符数组。
+	0,		      // 所属初始进程组。
+	0,		      // 初始停止标志。
+	rs_write,	      // 串口2 tty 写函数指针。
 	{0x2f8, 0, 0, 0, ""},
 	/* rs 2 */	      // 串行终端2 读缓冲队列。
 	{0x2f8, 0, 0, 0, ""}, // 串行终端2 写缓冲队列。
@@ -142,7 +142,7 @@ struct tty_queue * table_list[] = {
 // 初始化串口终端和控制台终端。
 void tty_init(void)
 {
-	rs_init(); // 初始化串行中断程序和串行接口1 和2。(serial.c, 37)
+	rs_init();  // 初始化串行中断程序和串行接口1 和2。(serial.c, 37)
 	con_init(); // 初始化控制台终端。(console.c, 617)
 }
 

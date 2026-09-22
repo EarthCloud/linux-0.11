@@ -15,7 +15,7 @@
 #include <linux/sys.h> // 系统调用头文件。含有72 个系统调用C 函数处理程序,以'sys_'开头。
 #include <linux/fdreg.h> // 软驱头文件。含有软盘控制器参数的一些定义。
 #include <asm/system.h> // 系统头文件。定义了设置或修改描述符/中断门等的嵌入式汇编宏。
-#include <asm/io.h> // io 头文件。定义硬件端口输入/输出宏汇编语句。
+#include <asm/io.h>	 // io 头文件。定义硬件端口输入/输出宏汇编语句。
 #include <asm/segment.h> // 段操作头文件。定义了有关段寄存器操作的嵌入式汇编函数。
 
 #include <signal.h> // 信号头文件。定义信号符号常量，sigaction 结构，操作函数原型。
@@ -59,7 +59,7 @@ void show_stat(void)
 extern void mem_use(void); // [??]没有任何地方定义和引用该函数。
 
 extern int
-timer_interrupt(void); // 时钟中断处理程序(kernel/system_call.s,176)。
+timer_interrupt(void);	      // 时钟中断处理程序(kernel/system_call.s,176)。
 extern int system_call(void); // 系统调用中断处理程序(kernel/system_call.s,80)。
 
 union task_union { // 定义任务联合(任务结构成员和stack 字符数组程序成员)。
@@ -200,7 +200,7 @@ void sleep_on(struct task_struct ** p)
 	if (current ==
 	    &(init_task.task)) // 如果当前任务是任务0，则死机(impossible!)。
 		panic("task[0] trying to sleep");
-	tmp = *p; // 让tmp 指向已经在等待队列上的任务(如果有的话)。
+	tmp = *p;     // 让tmp 指向已经在等待队列上的任务(如果有的话)。
 	*p = current; // 将睡眠队列头的等待指针指向当前任务。
 	current->state =
 	    TASK_UNINTERRUPTIBLE; // 将当前任务置为不可中断的等待状态。
@@ -304,7 +304,7 @@ void floppy_on(unsigned int nr)
 		sleep_on(
 		    nr +
 		    wait_motor); // 为不可中断睡眠状态并放入等待马达运行的队列中。
-	sti(); // 开中断。
+	sti();			 // 开中断。
 }
 
 // 置关闭相应软驱马达停转定时器（3 秒）。
@@ -329,8 +329,8 @@ void do_floppy_timer(void)
 				wake_up(
 				    i +
 				    wait_motor); // 如果马达启动定时到则唤醒进程。
-		} else if (!moff_timer[i]) { // 如果马达停转定时到则
-			current_DOR &= ~mask; // 复位相应马达启动位，并
+		} else if (!moff_timer[i]) {	 // 如果马达停转定时到则
+			current_DOR &= ~mask;	 // 复位相应马达启动位，并
 			outb(current_DOR, FD_DOR); // 更新数字输出寄存器。
 		} else
 			moff_timer[i]--; // 马达停转计时递减。
