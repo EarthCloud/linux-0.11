@@ -64,6 +64,7 @@ b sys_fork       # kernel/fork.c
 
 ## 目录结构
 
+```
 boot/      引导：bootsect.s / setup.s / head.s     （GNU as，AT&T 语法）
 init/      内核入口 main.c 与 init()
 kernel/    调度、系统调用、中断、字符/块设备驱动
