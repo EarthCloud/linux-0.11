@@ -36,13 +36,13 @@ struct task_struct * wait_for_request = NULL;
  *	next-request
  */
 struct blk_dev_struct blk_dev[NR_BLK_DEV] = {
-	{ NULL, NULL },		/* no_dev */
-	{ NULL, NULL },		/* dev mem */
-	{ NULL, NULL },		/* dev fd */
-	{ NULL, NULL },		/* dev hd */
-	{ NULL, NULL },		/* dev ttyx */
-	{ NULL, NULL },		/* dev tty */
-	{ NULL, NULL }		/* dev lp */
+    {NULL, NULL}, /* no_dev */
+    {NULL, NULL}, /* dev mem */
+    {NULL, NULL}, /* dev fd */
+    {NULL, NULL}, /* dev hd */
+    {NULL, NULL}, /* dev ttyx */
+    {NULL, NULL}, /* dev tty */
+    {NULL, NULL}  /* dev lp */
 };
 
 static inline void lock_buffer(struct buffer_head * bh)
@@ -50,7 +50,7 @@ static inline void lock_buffer(struct buffer_head * bh)
 	cli();
 	while (bh->b_lock)
 		sleep_on(&bh->b_wait);
-	bh->b_lock=1;
+	bh->b_lock = 1;
 	sti();
 }
 
@@ -81,23 +81,22 @@ static void add_request(struct blk_dev_struct * dev, struct request * req)
 		(dev->request_fn)();
 		return;
 	}
-	for ( ; tmp->next ; tmp=tmp->next)
-		if ((IN_ORDER(tmp,req) || 
-		    !IN_ORDER(tmp,tmp->next)) &&
-		    IN_ORDER(req,tmp->next))
+	for (; tmp->next; tmp = tmp->next)
+		if ((IN_ORDER(tmp, req) || !IN_ORDER(tmp, tmp->next)) &&
+		    IN_ORDER(req, tmp->next))
 			break;
-	req->next=tmp->next;
-	tmp->next=req;
+	req->next = tmp->next;
+	tmp->next = req;
 	sti();
 }
 
-static void make_request(int major,int rw, struct buffer_head * bh)
+static void make_request(int major, int rw, struct buffer_head * bh)
 {
 	struct request * req;
 	int rw_ahead;
 
-/* WRITEA/READA is special case - it is not really needed, so if the */
-/* buffer is locked, we just forget about it, else it's a normal read */
+	/* WRITEA/READA is special case - it is not really needed, so if the */
+	/* buffer is locked, we just forget about it, else it's a normal read */
 	if ((rw_ahead = (rw == READA || rw == WRITEA))) {
 		if (bh->b_lock)
 			return;
@@ -106,7 +105,7 @@ static void make_request(int major,int rw, struct buffer_head * bh)
 		else
 			rw = WRITE;
 	}
-	if (rw!=READ && rw!=WRITE)
+	if (rw != READ && rw != WRITE)
 		panic("Bad block dev command, must be R/W/RA/WA");
 	lock_buffer(bh);
 	if ((rw == WRITE && !bh->b_dirt) || (rw == READ && bh->b_uptodate)) {
@@ -114,19 +113,19 @@ static void make_request(int major,int rw, struct buffer_head * bh)
 		return;
 	}
 repeat:
-/* we don't allow the write-requests to fill up the queue completely:
+	/* we don't allow the write-requests to fill up the queue completely:
  * we want some room for reads: they take precedence. The last third
  * of the requests are only for reads.
  */
 	if (rw == READ)
-		req = request+NR_REQUEST;
+		req = request + NR_REQUEST;
 	else
-		req = request+((NR_REQUEST*2)/3);
-/* find an empty request */
+		req = request + ((NR_REQUEST * 2) / 3);
+	/* find an empty request */
 	while (--req >= request)
-		if (req->dev<0)
+		if (req->dev < 0)
 			break;
-/* if none found, sleep on new requests: check for rw_ahead */
+	/* if none found, sleep on new requests: check for rw_ahead */
 	if (req < request) {
 		if (rw_ahead) {
 			unlock_buffer(bh);
@@ -135,36 +134,36 @@ repeat:
 		sleep_on(&wait_for_request);
 		goto repeat;
 	}
-/* fill up the request-info, and add it to the queue */
+	/* fill up the request-info, and add it to the queue */
 	req->dev = bh->b_dev;
 	req->cmd = rw;
-	req->errors=0;
-	req->sector = bh->b_blocknr<<1;
+	req->errors = 0;
+	req->sector = bh->b_blocknr << 1;
 	req->nr_sectors = 2;
 	req->buffer = bh->b_data;
 	req->waiting = NULL;
 	req->bh = bh;
 	req->next = NULL;
-	add_request(major+blk_dev,req);
+	add_request(major + blk_dev, req);
 }
 
 void ll_rw_block(int rw, struct buffer_head * bh)
 {
 	unsigned int major;
 
-	if ((major=MAJOR(bh->b_dev)) >= NR_BLK_DEV ||
-	!(blk_dev[major].request_fn)) {
+	if ((major = MAJOR(bh->b_dev)) >= NR_BLK_DEV ||
+	    !(blk_dev[major].request_fn)) {
 		printk("Trying to read nonexistent block-device\n\r");
 		return;
 	}
-	make_request(major,rw,bh);
+	make_request(major, rw, bh);
 }
 
 void blk_dev_init(void)
 {
 	int i;
 
-	for (i=0 ; i<NR_REQUEST ; i++) {
+	for (i = 0; i < NR_REQUEST; i++) {
 		request[i].dev = -1;
 		request[i].next = NULL;
 	}

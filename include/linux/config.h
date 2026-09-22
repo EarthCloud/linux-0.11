@@ -24,7 +24,7 @@
 * KBD_GR 是德式键盘。
 * KBD_FR 是法式键盘。
 */
-#define KBD_US 
+#define KBD_US
 /*#define KBD_GR */
 /*#define KBD_FR */
 /*#define KBD_FINNISH*/

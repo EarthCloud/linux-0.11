@@ -10,11 +10,11 @@
 #include <set_seg.h>
 
 #define __LIBRARY__
-#include <unistd.h>// Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。
-								// 如定义了__LIBRARY__，则还包括系统调用号和内嵌汇编_syscall0()等。
-#include <stdarg.h>// 标准参数头文件。以宏的形式定义变量参数列表。主要说明了-个
-								// 类型(va_list)和三个宏(va_start, va_arg 和va_end)，用于
-								// vsprintf、vprintf、vfprintf 函数。
+#include <unistd.h> // Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。
+	  // 如定义了__LIBRARY__，则还包括系统调用号和内嵌汇编_syscall0()等。
+#include <stdarg.h> // 标准参数头文件。以宏的形式定义变量参数列表。主要说明了-个
+	  // 类型(va_list)和三个宏(va_start, va_arg 和va_end)，用于
+	  // vsprintf、vprintf、vfprintf 函数。
 
 //// 打开文件函数。
 // 打开并有可能创建一个文件。
@@ -28,7 +28,7 @@ int open(const char * filename, int flag, ...)
 // 利用va_start()宏函数，取得flag 后面参数的指针，然后调用系统中断int 0x80，功能open 进行
 // 文件打开操作。
 // %0 - eax(返回的描述符或出错码)；%1 - eax(系统中断调用功能号__NR_open)；
-#if 0	/* ===== 赵炯 V3.0 的 Visual C++ 方言原实现，保留备查 ===== */
+#if 0 /* ===== 赵炯 V3.0 的 Visual C++ 方言原实现，保留备查 ===== */
 // %2 - ebx(文件名filename)；%3 - ecx(打开文件标志flag)；%4 - edx(后随参数文件属性mode)。
 	va_start(arg,flag);
 	res = va_arg(arg,int);
@@ -40,16 +40,16 @@ int open(const char * filename, int flag, ...)
 		int 0x80
 		mov res,eax
 	}
-#endif	/* ===== VC 方言结束 ===== */
+#endif /* ===== VC 方言结束 ===== */
 
-	__asm__("int $0x80"
-		:"=a" (res)
-		:"0" (__NR_open),"b" (filename),"c" (flag),
-		"d" (va_arg(arg,int)));
-// 系统中断调用返回值大于或等于0，表示是一个文件描述符，则直接返回之。
-	if (res>=0)
+	__asm__(
+	    "int $0x80"
+	    : "=a"(res)
+	    : "0"(__NR_open), "b"(filename), "c"(flag), "d"(va_arg(arg, int)));
+	// 系统中断调用返回值大于或等于0，表示是一个文件描述符，则直接返回之。
+	if (res >= 0)
 		return res;
-// 否则说明返回值小于0，则代表一个出错码。设置该出错码并返回-1。
+	// 否则说明返回值小于0，则代表一个出错码。设置该出错码并返回-1。
 	errno = -res;
 	return -1;
 }

@@ -28,4 +28,3 @@ __asm__ ( "cld;rep;movsb" \
 : "di", "si", "cx"); \
 _res; \
 })*/
-

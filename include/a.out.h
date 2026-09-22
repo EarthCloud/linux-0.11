@@ -16,14 +16,15 @@
 // -----------------------------
 struct exec
 {
-  unsigned long a_magic;	/* Use macros N_MAGIC, etc for access */
-  unsigned a_text;		/* length of text, in bytes */
-  unsigned a_data;		/* length of data, in bytes */
-  unsigned a_bss;		/* length of uninitialized data area for file, in bytes */
-  unsigned a_syms;		/* length of symbol table data in file, in bytes */
-  unsigned a_entry;		/* start address */
-  unsigned a_trsize;		/* length of relocation info for text, in bytes */
-  unsigned a_drsize;		/* length of relocation info for data, in bytes */
+	unsigned long a_magic; /* Use macros N_MAGIC, etc for access */
+	unsigned a_text;       /* length of text, in bytes */
+	unsigned a_data;       /* length of data, in bytes */
+	unsigned
+	    a_bss; /* length of uninitialized data area for file, in bytes */
+	unsigned a_syms;   /* length of symbol table data in file, in bytes */
+	unsigned a_entry;  /* start address */
+	unsigned a_trsize; /* length of relocation info for text, in bytes */
+	unsigned a_drsize; /* length of relocation info for data, in bytes */
 };
 
 // 用于取执行结构中的魔数。
@@ -46,21 +47,20 @@ struct exec
 // 如果魔数不能被识别，则返回真。
 #ifndef N_BADMAG
 #define N_BADMAG(x) \
-(N_MAGIC(x) != OMAGIC && N_MAGIC(x) != NMAGIC \
-&& N_MAGIC(x) != ZMAGIC)
+	(N_MAGIC(x) != OMAGIC && N_MAGIC(x) != NMAGIC && N_MAGIC(x) != ZMAGIC)
 #endif
 
 #define _N_BADMAG(x) \
-(N_MAGIC(x) != OMAGIC && N_MAGIC(x) != NMAGIC \
-&& N_MAGIC(x) != ZMAGIC)
+	(N_MAGIC(x) != OMAGIC && N_MAGIC(x) != NMAGIC && N_MAGIC(x) != ZMAGIC)
 
 // 程序头在内存中的偏移位置。
-#define _N_HDROFF(x) (SEGMENT_SIZE - sizeof (struct exec))
+#define _N_HDROFF(x) (SEGMENT_SIZE - sizeof(struct exec))
 
 // 代码起始偏移值。
 #ifndef N_TXTOFF
-#define N_TXTOFF(x) \
-(N_MAGIC(x) == ZMAGIC ? _N_HDROFF((x)) + sizeof (struct exec) : sizeof (struct exec))
+#define N_TXTOFF(x)                                                    \
+	(N_MAGIC(x) == ZMAGIC ? _N_HDROFF((x)) + sizeof(struct exec) : \
+				sizeof(struct exec))
 #endif
 
 // 数据起始偏移值。
@@ -124,13 +124,13 @@ on machines not listed here. */
 #define _N_SEGMENT_ROUND(x) (((x) + SEGMENT_SIZE - 1) & ~(SEGMENT_SIZE - 1))
 
 // 代码段尾地址。
-#define _N_TXTENDADDR(x) (N_TXTADDR(x)+(x).a_text)
+#define _N_TXTENDADDR(x) (N_TXTADDR(x) + (x).a_text)
 
 // 数据开始地址。
 #ifndef N_DATADDR
-#define N_DATADDR(x) \
-(N_MAGIC(x)==OMAGIC? (_N_TXTENDADDR(x)) \
-: (_N_SEGMENT_ROUND (_N_TXTENDADDR(x))))
+#define N_DATADDR(x)                                 \
+	(N_MAGIC(x) == OMAGIC ? (_N_TXTENDADDR(x)) : \
+				(_N_SEGMENT_ROUND(_N_TXTENDADDR(x))))
 #endif
 
 /* Address of bss segment in memory after it is loaded. */
@@ -143,17 +143,15 @@ on machines not listed here. */
 #ifndef N_NLIST_DECLARED
 struct nlist
 {
-  union
-  {
-    char *n_name;
-    struct nlist *n_next;
-    long n_strx;
-  }
-  n_un;
-  unsigned char n_type;
-  char n_other;
-  short n_desc;
-  unsigned long n_value;
+	union {
+		char * n_name;
+		struct nlist * n_next;
+		long n_strx;
+	} n_un;
+	unsigned char n_type;
+	char n_other;
+	short n_desc;
+	unsigned long n_value;
 };
 #endif
 
@@ -223,18 +221,18 @@ in that it can satisfy undefined external references. */
 
 /* These appear as input to LD, in a .o file. */
 /* 以下这些符号在目标文件中是作为链接程序LD 的输入。*/
-#define N_SETA 0x14		/* Absolute set element symbol */
+#define N_SETA 0x14 /* Absolute set element symbol */
 /* 绝对集合元素符号 */
-#define N_SETT 0x16		/* Text set element symbol */
+#define N_SETT 0x16 /* Text set element symbol */
 /* 代码集合元素符号 */
-#define N_SETD 0x18		/* Data set element symbol */
+#define N_SETD 0x18 /* Data set element symbol */
 /* 数据集合元素符号 */
-#define N_SETB 0x1A		/* Bss set element symbol */
+#define N_SETB 0x1A /* Bss set element symbol */
 /* Bss 集合元素符号 */
 
 /* This is output from LD. */
 /* 下面是LD 的输出。*/
-#define N_SETV 0x1C		/* Pointer to set vector in data area. */
+#define N_SETV 0x1C /* Pointer to set vector in data area. */
 /* 指向数据区中集合向量。*/
 
 #ifndef N_RELOCATION_INFO_DECLARED
@@ -250,42 +248,41 @@ Likewise, the data-relocation section applies to the data section. */
 // 重定位信息结构。
 struct relocation_info
 {
-/* Address (within segment) to be relocated. */
-/* 需要重定位的地址（在段内）。*/
-  int r_address;
-/* The meaning of r_symbolnum depends on r_extern. */
-/* r_symbolnum 的含义与r_extern 有关。*/
-  unsigned int r_symbolnum:24;
-/* Nonzero means value is a pc-relative offset
+	/* Address (within segment) to be relocated. */
+	/* 需要重定位的地址（在段内）。*/
+	int r_address;
+	/* The meaning of r_symbolnum depends on r_extern. */
+	/* r_symbolnum 的含义与r_extern 有关。*/
+	unsigned int r_symbolnum : 24;
+	/* Nonzero means value is a pc-relative offset
 and it should be relocated for changes in its own address
 as well as for changes in the symbol or section specified. */
-/* 非零意味着值是一个pc 相关的偏移值，因而需要被重定位到自己
+	/* 非零意味着值是一个pc 相关的偏移值，因而需要被重定位到自己
 的地址处以及符号或节指定的改变。 */
-  unsigned int r_pcrel:1;
-/* Length (as exponent of 2) of the field to be relocated.
+	unsigned int r_pcrel : 1;
+	/* Length (as exponent of 2) of the field to be relocated.
 Thus, a value of 2 indicates 1<<2 bytes. */
-/* 需要被重定位的字段长度（是2 的次方）。
+	/* 需要被重定位的字段长度（是2 的次方）。
 因此，若值是2 则表示1<<2 字节数。*/
-  unsigned int r_length:2;
-/* 1 => relocate with value of symbol.
+	unsigned int r_length : 2;
+	/* 1 => relocate with value of symbol.
 r_symbolnum is the index of the symbol
 in file's the symbol table.
 0 => relocate with the address of a segment.
 r_symbolnum is N_TEXT, N_DATA, N_BSS or N_ABS
 (the N_EXT bit may be set also, but signifies nothing). */
-/* 1 => 以符号的值重定位。
+	/* 1 => 以符号的值重定位。
 r_symbolnum 是文件符号表中符号的索引。
 0 => 以段的地址进行重定位。
 r_symbolnum 是N_TEXT、N_DATA、N_BSS 或N_ABS
 (N_EXT 比特位也可以被设置，但是毫无意义)。*/
-  unsigned int r_extern:1;
-/* Four bits that aren't used, but when writing an object file
+	unsigned int r_extern : 1;
+	/* Four bits that aren't used, but when writing an object file
 it is desirable to clear them. */
-/* 没有使用的4 个比特位，但是当进行写一个目标文件时
+	/* 没有使用的4 个比特位，但是当进行写一个目标文件时
 最好将它们复位掉。*/
-  unsigned int r_pad:4;
+	unsigned int r_pad : 4;
 };
 #endif /* no N_RELOCATION_INFO_DECLARED. */
-
 
 #endif /* __A_OUT_GNU_H__ */

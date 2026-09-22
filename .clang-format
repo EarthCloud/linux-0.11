@@ -1,15 +1,23 @@
-# Linux 0.11 —— clang-format 配置
+# Linux 0.11 —— clang-format 配置（对齐 Linus 1991 年的写法）
 #
-# 风格来源：Linus Torvalds 在 Documentation/process/coding-style.rst 里定下的
-# Linux 内核编码风格；本文件对齐内核源码树自带的 .clang-format。
+# 基准：Linux 内核编码风格（Documentation/process/coding-style.rst），
+# 并按原始 0.11 源码的实际习惯做了两处修正：
+#   * PointerAlignment: Middle —— 原版是 `struct m_inode * inode`，
+#     而不是现代内核的 `struct m_inode *inode`（fs/namei.c 58:0、fs/inode.c 25:0）
+#   * SpaceBeforeParens: ControlStatements —— `if (x)` 有空格，`foo(x)` 没有
+#
+# clang-format 复现不了的两条 1991 年习惯（它没有对应选项，写死为现代写法）：
+#   * 逗号后不加空格：原版 `memset(inode,0,sizeof(*inode));` → 会被改成 `inode, 0, ...`
+#   * 二元运算符两侧不加空格：原版 `i<8`、`j+i*8192` → 会被改成 `i < 8`、`j + i * 8192`
+# 想要连这两条也一致，只能用 astyle（--pad-oper/-p 关闭、--pad-comma/-xg 关闭）。
 #
 # 用法：
 #   clang-format -i <file>              格式化单个文件
 #   git clang-format                    只格式化本次改动的行
 #   clang-format --dry-run -Werror <f>  只检查、不修改
 #
-# 提醒：这是 1991 年的历史代码（含赵炯老师的中文逐行注释），整仓库跑 -i 会产生
-# 大量纯风格改动。先 `git clang-format` 看范围，或只用在自己新写的代码上。
+# 注意：boot/*.s、kernel/system_call.s、mm/page.s、kb.S、rs_io.s 是 GNU as 汇编，
+# 不能喂给 clang-format（它按 C/C++ 解析会把汇编改坏）。只格式化 *.c / *.h。
 #
 # 下面这些 Linus 的规矩 clang-format 管不了，只能靠自觉：
 #   * 缩进用 TAB，宽度就是 8（不是 4，更不是空格）
@@ -82,7 +90,8 @@ PenaltyBreakBeforeFirstCallParameter: 1
 PenaltyExcessCharacter: 1000000
 PenaltyReturnTypeOnItsOwnLine: 60
 
-PointerAlignment: Right
+# 原版 0.11 是 `struct inode * inode`（两边都留空格）
+PointerAlignment: Middle
 # 不要重排注释内容：中文注释被重排会很难看
 ReflowComments: false
 # include 次序由作者手工维护，工具不要插手

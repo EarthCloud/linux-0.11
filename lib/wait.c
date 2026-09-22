@@ -27,10 +27,10 @@
 //
 // 参数：pid - 等待被终止进程的进程id，或者是用于指定特殊情况的其它特定数值；
 //       wait_stat - 用于存放状态信息；options - WNOHANG 或WUNTRACED 或是0。
-_syscall3(pid_t,waitpid,pid_t,pid,int *,wait_stat,int,options)
+_syscall3(pid_t, waitpid, pid_t, pid, int *, wait_stat, int, options)
 
-//// wait()系统调用。直接调用waitpid()函数。
-pid_t wait(int * wait_stat)
+    //// wait()系统调用。直接调用waitpid()函数。
+    pid_t wait(int * wait_stat)
 {
-	return waitpid(-1,wait_stat,0);
+	return waitpid(-1, wait_stat, 0);
 }
