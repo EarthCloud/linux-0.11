@@ -9,7 +9,6 @@
 	这些参数不再使用后占用该内存，导致函数返回时出错。
 	math/math_emulate.c照理也应该这样，不过好像它没有把eip等参数优化掉:)
 */
-#include <set_seg.h>
 
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
 // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。

@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #include <string.h>   // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。

@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 #include <errno.h> // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。
 #include <termios.h> // 终端输入输出函数头文件。主要定义控制异步通信口的终端接口。

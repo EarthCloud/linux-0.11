@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #include <ctype.h> // 字符类型头文件。定义了一些有关字符类型判断和转换的宏。
 

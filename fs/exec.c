@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 /*
  * #!开始的程序检测部分是由tytso 实现的。

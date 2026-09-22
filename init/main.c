@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #define __LIBRARY__ // 定义该变量是为了包括定义在unistd.h 中的内嵌汇编代码等信息。
 

@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #define __LIBRARY__
 // Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。

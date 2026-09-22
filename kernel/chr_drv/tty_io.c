@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 /*
 * 'tty_io.c'给tty 一种非相关的感觉，是控制台还是串行通道。该程序同样

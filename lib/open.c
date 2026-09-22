@@ -7,7 +7,6 @@
  * 在文件开始位置。参数flag 是0_RDONLY、O_WRONLY、O_RDWR 之一，分别代表文件只读打开、只
  * 写打开和读写打开方式，可以与其它一些标志一起使用。(参见fs/open.c，138 行)
  */
-#include <set_seg.h>
 
 #define __LIBRARY__
 #include <unistd.h> // Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。

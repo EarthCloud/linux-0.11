@@ -9,7 +9,6 @@
 	这些参数不再使用后占用该内存，导致函数返回时出错。
 	math/math_emulate.c照理也应该这样，不过好像它没有把eip等参数优化掉:)
 */
-#include <set_seg.h>
 
 /*
 * 'fork.c'中含有系统调用'fork'的辅助子程序（参见system_call.s），以及一些其它函数

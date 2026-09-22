@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #include <signal.h> // 信号头文件。定义信号符号常量，信号结构以及信号操作函数原型。
 

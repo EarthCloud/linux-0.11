@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #include <string.h> // 字符串头文件。主要定义了一些有关字符串操作的嵌入函数。
 #include <errno.h> // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。

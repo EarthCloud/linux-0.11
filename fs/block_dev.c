@@ -7,7 +7,6 @@
  * block_write()两个块设备读写函数。这两个函数是供系统调用函数read()和write()调用的，
  * 其它地方没有引用。
 */
-#include <set_seg.h>
 
 // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。
 #include <errno.h>

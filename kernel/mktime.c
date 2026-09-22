@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 #include <time.h> // 时间头文件，定义了标准时间数据结构tm 和一些处理时间函数原型。
 

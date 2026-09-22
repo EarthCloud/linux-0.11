@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 /*
 * This function is used through-out the kernel (includeinh mm and fs)

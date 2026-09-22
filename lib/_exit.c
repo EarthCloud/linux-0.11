@@ -3,7 +3,6 @@
  *
  *  (C) 1991  Linus Torvalds
  */
-#include <set_seg.h>
 
 #define __LIBRARY__ // 定义一个符号常量，见下行说明。
 

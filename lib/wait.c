@@ -13,7 +13,6 @@
  *     如果pid= -1，options=0，则waitpid()的作用与wait()函数一样。否则其行为将随pid 和
  * options 参数的不同而不同。（参见kernel/exit.c,142）
  */
-#include <set_seg.h>
 
 #define __LIBRARY__
 // Linux 标准头文件。定义了各种符号常数和类型，并申明了各种函数。

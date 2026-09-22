@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 #include <sys/stat.h> // 文件状态头文件。含有文件或文件系统状态结构stat{}和常量。
 #include <errno.h> // 错误号头文件。包含系统中各种出错号。(Linus 从minix 中引进的)。

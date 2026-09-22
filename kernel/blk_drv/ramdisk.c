@@ -3,7 +3,6 @@
 *
 * Written by Theodore Ts'o, 12/2/91
 */
-#include <set_seg.h>
 
 /* 由Theodore Ts'o 编制，12/2/91
 */

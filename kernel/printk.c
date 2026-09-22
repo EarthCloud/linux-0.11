@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 /*
 * When in kernel-mode, we cannot use printf, as fs is liable to

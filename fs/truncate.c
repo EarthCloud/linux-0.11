@@ -3,7 +3,6 @@
 *
 * (C) 1991 Linus Torvalds
 */
-#include <set_seg.h>
 
 #include <linux/sched.h> // 调度程序头文件，定义了任务结构task_struct、初始任务0 的数据，
 // 还有一些有关描述符参数设置和获取的嵌入式汇编函数宏语句。
