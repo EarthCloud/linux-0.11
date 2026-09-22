@@ -207,6 +207,15 @@ __asm__("divl %4":"=a" (n),"=d" (__res):""  (n),"1" (0),"r" (base));
 `kernel/who.c`，并从 `kernel/Makefile` 的 `OBJS`、`include/linux/sys.h`、
 `include/unistd.h` 中移除对应项。
 
+### 运行不会弄脏镜像
+
+`lab.sh` 启动 QEMU 时带了 `-snapshot` 参数，对 `hdc-0.11.img` 的写入会落到临时文件并在
+退出时丢弃，因此**每次运行后工作区仍然是干净的**。手工运行 QEMU 时也建议加上：
+
+```bash
+qemu-system-i386 -m 16M -boot a -fda Image -hda hdc-0.11.img -snapshot
+```
+
 ### 关于 `boot/*.s` 的语法
 
 本项目 `boot/` 下的三个汇编文件已被改写成 **GNU as（AT&T 语法）**，因此整套构建只需要

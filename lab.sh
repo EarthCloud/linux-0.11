@@ -40,18 +40,18 @@ case "${1:-help}" in
     ;;
   run)
     need_image
-    exec $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA"
+    exec $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" -snapshot
     ;;
   debug)
     need_image
     echo "QEMU 已暂停，等待 gdb 连接 localhost:1234 ..."
-    exec $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" -s -S
+    exec $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" -snapshot -s -S
     ;;
   shot)
     need_image
     rm -f "$REF/shot.ppm" "$REF/boot-screenshot.png"
     ( sleep 22; echo "screendump $REF/shot.ppm"; sleep 2; echo "quit" ) | \
-      timeout 90 $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" \
+      timeout 90 $QEMU -m 16M -boot a -fda "$IMG" -hda "$HDA" -snapshot \
         -vga std -display none -monitor stdio >"$REF/boot.log" 2>&1
     python3 "$REF/scripts/ppm2png.py" "$REF/shot.ppm" "$REF/boot-screenshot.png" \
       && rm -f "$REF/shot.ppm"
