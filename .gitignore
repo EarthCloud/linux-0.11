@@ -14,9 +14,9 @@ kernel/chr_drv/keyboard.s
 # ---- 运行 / 调试产物 ----
 *.ppm
 boot.log
+boot-screenshot.png
 logs/
-cscope.out
-cscope.files
+cscope.*
 
 # ---- 编辑器 / 系统杂物 ----
 Thumbs.db
@@ -25,4 +25,3 @@ Thumbs.db
 *.bak
 *.orig
 *~
-boot-screenshot.png
